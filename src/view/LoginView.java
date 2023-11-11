@@ -35,11 +35,25 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel("Login Screen");
+        JLabel title = new JLabel("Welcome to Quizit!");
+        JLabel subtitle = new JLabel("Please login to start");
+        subtitle.setFont(new Font("Calibri",Font.BOLD,17));
+        title.setFont(new Font("Calibri",Font.BOLD,24));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
+        // set size of the prefered texlabel
+        usernameInputField.setPreferredSize(new Dimension(100,30));
+        usernameInputField.setFont(new Font(usernameInputField.getFont().getName(),usernameInputField.getFont().getStyle(),16));
 
         LabelTextPanel usernameInfo = new LabelTextPanel(
                 new JLabel("Username"), usernameInputField);
+
+        passwordInputField.setPreferredSize(new Dimension(100,30));
+        passwordInputField.setFont(new Font(usernameInputField.getFont().getName(),usernameInputField.getFont().getStyle(),16));
+
+
         LabelTextPanel passwordInfo = new LabelTextPanel(
                 new JLabel("Password"), passwordInputField);
 
@@ -102,12 +116,18 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     }
                 });
 
+
+
         this.add(title);
+        this.add(subtitle);
+        usernameInfo.setPreferredSize(new Dimension(0,0));
         this.add(usernameInfo);
         this.add(usernameErrorField);
         this.add(passwordInfo);
         this.add(passwordErrorField);
         this.add(buttons);
+
+
     }
 
     /**
