@@ -15,6 +15,8 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import javax.swing.border.EmptyBorder;
+import java.awt.event.*;
 
 // Define the SignupView class, which is a Swing-based user interface.
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -26,36 +28,85 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
     private final SignupController signupController;
     private final ClearController clearController;
+    private Color background = new Color(57,54,70);
+    private Color textColor = new Color(244, 238, 224);
     private final JButton signUp;
     private final JButton cancel;
     private final JButton clear;
 
+
     // Constructor for the SignupView class.
     public SignupView(SignupController controller, SignupViewModel signupViewModel, ClearController clearController) {
+        this.setBackground(background);
         this.signupController = controller;
         this.signupViewModel = signupViewModel;
         this.clearController = clearController;
         signupViewModel.addPropertyChangeListener(this);
 
         // Create user interface elements.
-        JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel title = new JLabel("Welcome to Quizit!");
+        title.setForeground(textColor);
+        title.setBounds(400,0,200,100);
+        JLabel subtitle = new JLabel("Please sign up to start");
+        subtitle.setForeground(textColor);
+        subtitle.setFont(new Font("Calibri",Font.BOLD,17));
+        subtitle.setBounds(430,20,200,100);
+        title.setFont(new Font("Calibri",Font.BOLD,24));
 
-        LabelTextPanel usernameInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.USERNAME_LABEL), usernameInputField);
-        LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.PASSWORD_LABEL), passwordInputField);
-        LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordInputField);
+
+        // set size of the prefered texlabel
+        usernameInputField.setPreferredSize(new Dimension(200, 25));
+        usernameInputField.setFont(new Font(usernameInputField.getFont().getName(),usernameInputField.getFont().getStyle(),16));
+
+        // Username label when signing up
+        JLabel userName = new JLabel("Username");
+        userName.setBorder(new EmptyBorder(0,0,0,5)); //top,left,bottom,right
+        userName.setForeground(textColor);
+        LabelTextPanel usernameInfo = new LabelTextPanel(userName, usernameInputField);
+        usernameInfo.setBackground(background);
+        usernameInfo.setLayout(new BoxLayout(usernameInfo, BoxLayout.X_AXIS));
+
+        passwordInputField.setPreferredSize(new Dimension(200, 25));
+        passwordInputField.setFont(new Font(usernameInputField.getFont().getName(),usernameInputField.getFont().getStyle(),16));
+
+        JLabel passText = new JLabel("Password");
+        passText.setForeground(textColor);
+        passText.setBorder(new EmptyBorder(0,0,0,5));
+        LabelTextPanel passwordInfo = new LabelTextPanel(passText, passwordInputField);
+        passwordInfo.setBackground(background);
+        passwordInfo.setLayout(new BoxLayout(passwordInfo, BoxLayout.X_AXIS));
+
+        // ...
+
+        repeatPasswordInputField.setPreferredSize(new Dimension(200, 25));
+        repeatPasswordInputField.setFont(new Font(usernameInputField.getFont().getName(),usernameInputField.getFont().getStyle(),16));
+
+        JLabel repeatPasswordText = new JLabel("Repeat Password");
+        repeatPasswordText.setForeground(textColor);
+        repeatPasswordText.setBorder(new EmptyBorder(0, 0, 0, 5));
+        LabelTextPanel repeatpasswordInfo = new LabelTextPanel(repeatPasswordText, repeatPasswordInputField);
+        repeatpasswordInfo.setBackground(background);
+        repeatpasswordInfo.setLayout(new BoxLayout(repeatpasswordInfo, BoxLayout.X_AXIS));
+
 
         JPanel buttons = new JPanel();
+
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
+        signUp.setBackground(new Color(79, 69, 87));
+        signUp.setForeground(textColor);
+
         buttons.add(signUp);
         cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancel);
 
+        cancel.setBackground(new Color (79, 69, 87));
+        cancel.setForeground(textColor);
+
         clear = new JButton(SignupViewModel.CLEAR_BUTTON_LABEL);
         buttons.add(clear);
+        clear.setBackground(new Color (79, 69, 87));
+        clear.setForeground(textColor);
+
 
         // Register action listeners for buttons.
         signUp.addActionListener(new ActionListener() {
@@ -84,7 +135,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
             }
         });
 
-        cancel.addActionListener(this);
+        clear.addActionListener(this);
 
         // Add KeyListeners for input fields.
         usernameInputField.addKeyListener(new KeyListener() {
@@ -104,6 +155,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
             public void keyReleased(KeyEvent e) {
             }
         });
+
 
         passwordInputField.addKeyListener(new KeyListener() {
             @Override
@@ -140,13 +192,21 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         });
 
         // Configure the layout of the panel.
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(null);
+
+        usernameInfo.setBounds(390,267,200,25);
+        passwordInfo.setBounds(390,310,200,25);
+        repeatpasswordInfo.setBounds(390, 350, 220, 25);
+        buttons.setBounds(390, 400, 200, 35);  // Add this line
+        this.add(buttons);
 
         // Add UI elements to the panel.
+        this.add(subtitle);
+        usernameInfo.setPreferredSize(new Dimension(0,0));
         this.add(title);
         this.add(usernameInfo);
         this.add(passwordInfo);
-        this.add(repeatPasswordInfo);
+        this.add(repeatpasswordInfo);
         this.add(buttons);
     }
 

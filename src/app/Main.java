@@ -16,13 +16,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
+
 public class Main {
     public static void main(String[] args) {
         // Build the main program window, the main panel containing the
         // various cards, and the layout, and stitch them together.
 
         // The main application window.
-        JFrame application = new JFrame("Login Example");
+        JFrame application = new JFrame("Quizit!");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
@@ -62,6 +63,7 @@ public class Main {
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
 
+        application.setPreferredSize(new Dimension(1024,800));
         application.pack();
         application.setVisible(true);
     }
