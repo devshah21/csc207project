@@ -17,6 +17,9 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.*;
+import interface_adapter.login.LoginViewModel;
+import view.LoginView;
+
 
 // Define the SignupView class, which is a Swing-based user interface.
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -31,7 +34,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private Color background = new Color(57,54,70);
     private Color textColor = new Color(244, 238, 224);
     private final JButton signUp;
-    private final JButton cancel;
+    private final JButton logIn;
     private final JButton clear;
 
 
@@ -96,11 +99,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         signUp.setForeground(textColor);
 
         buttons.add(signUp);
-        cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
-        buttons.add(cancel);
 
-        cancel.setBackground(new Color (79, 69, 87));
-        cancel.setForeground(textColor);
+        logIn = new JButton(LoginViewModel.LOGIN_BUTTON_LABEL);
+        buttons.add(logIn);
+
+        logIn.setBackground(new Color (79, 69, 87));
+        logIn.setForeground(textColor);
 
         clear = new JButton(SignupViewModel.CLEAR_BUTTON_LABEL);
         buttons.add(clear);
@@ -121,6 +125,16 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 }
             }
         });
+
+        logIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource().equals(logIn)) {
+
+                }
+            }
+        });
+
 
         clear.addActionListener(new ActionListener() {
             @Override
@@ -214,7 +228,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
      * React to a button click that results in evt.
      */
     public void actionPerformed(ActionEvent evt) {
-        JOptionPane.showConfirmDialog(this, "Cancel not implemented yet.");
+        JOptionPane.showConfirmDialog(this, "LogIn not implemented yet.");
     }
 
     @Override
