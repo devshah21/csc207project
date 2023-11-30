@@ -3,10 +3,15 @@ package app;
 import interface_adapter.clear_users.ClearController;
 import interface_adapter.clear_users.ClearPresenter;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.login_move.LoginMoveController;
+import interface_adapter.login_move.LoginMovePresenter;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
 import use_case.clear_users.*;
+import use_case.login_move.LoginMoveInputBoundary;
+import use_case.login_move.LoginMoveInteractor;
+import use_case.login_move.LoginMoveOutputBoundary;
 import use_case.signup.SignupUserDataAccessInterface;
 import entity.CommonUserFactory;
 import entity.UserFactory;
@@ -31,12 +36,26 @@ public class SignupUseCaseFactory {
         try {
             SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
             ClearController clearController = clearUsersUseCase(viewManagerModel, signupViewModel, clearDataAccessObject);
-            return new SignupView(signupController, signupViewModel, clearController);
+
+            // This is just to move with button to login GUI
+            LoginMoveController loginMoveController = createloginMoveUseCase(viewManagerModel, loginViewModel);
+
+            return new SignupView(signupController, signupViewModel, clearController, loginMoveController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
 
         return null;
+    }
+
+    private static LoginMoveController createloginMoveUseCase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel) {
+
+        LoginMoveOutputBoundary loginMoveOutputBoundary = new LoginMovePresenter(viewManagerModel, loginViewModel);
+
+        LoginMoveInputBoundary loginMoveInteractor = new LoginMoveInteractor(loginMoveOutputBoundary);
+
+        return new LoginMoveController(loginMoveInteractor);
+
     }
 
     private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, SignupUserDataAccessInterface userDataAccessObject) throws IOException {

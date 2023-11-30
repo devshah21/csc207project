@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.clear_users.ClearController;
 import interface_adapter.clear_users.ClearViewModel;
+import interface_adapter.login_move.LoginMoveController;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
@@ -31,6 +32,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
     private final SignupController signupController;
     private final ClearController clearController;
+
+    private final LoginMoveController loginMoveController; // NEW
     private Color background = new Color(57,54,70);
     private Color textColor = new Color(244, 238, 224);
     private final JButton signUp;
@@ -39,11 +42,14 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
 
     // Constructor for the SignupView class.
-    public SignupView(SignupController controller, SignupViewModel signupViewModel, ClearController clearController) {
+    public SignupView(SignupController controller, SignupViewModel signupViewModel, ClearController clearController, LoginMoveController loginMoveController) {
         this.setBackground(background);
         this.signupController = controller;
         this.signupViewModel = signupViewModel;
         this.clearController = clearController;
+
+        this.loginMoveController = loginMoveController; // NEW
+
         signupViewModel.addPropertyChangeListener(this);
 
         // Create user interface elements.
@@ -130,6 +136,11 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
             @Override
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(logIn)) {
+
+
+                    loginMoveController.execute();
+
+
 
                 }
             }
