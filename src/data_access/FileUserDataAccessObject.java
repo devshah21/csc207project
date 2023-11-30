@@ -34,7 +34,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         csvFile = new File(csvPath);
         headers.put("username", 0);
         headers.put("password", 1);
-        headers.put("creation_time", 2);
+        headers.put("score", 2);
 
         // If the CSV file is empty, save it.
         if (csvFile.length() == 0) {
@@ -45,16 +45,15 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                 String header = reader.readLine();
 
                 // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-                assert header.equals("username,password,creation_time");
+                assert header.equals("username,password,score");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
                     String username = String.valueOf(col[headers.get("username")]);
                     String password = String.valueOf(col[headers.get("password")]);
-                    String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
-                    LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
-                    User user = userFactory.create(username, password, ldt);
+                    int score = 0;
+                    User user = userFactory.create(username, password, score);
                     accounts.put(username, user);
                 }
             }
@@ -84,7 +83,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
 
             for (User user : accounts.values()) {
                 String line = String.format("%s,%s,%s",
-                        user.getName(), user.getPassword(), user.getCreationTime());
+                        user.getName(), user.getPassword(), 0);
                 writer.write(line);
                 writer.newLine();
             }
