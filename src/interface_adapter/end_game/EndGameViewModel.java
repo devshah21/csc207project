@@ -1,21 +1,22 @@
-package interface_adapter.select_type;
+package interface_adapter.end_game;
 
 import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class SelectTypeViewModel extends ViewModel {
+public class EndGameViewModel extends ViewModel {
 
-    public static final String MULCHOICE_BUTTON_LABEL = "Multiple Choice";
+    public static final String REPLAY_BUTTON_LABEL = "Replay";
+    public static final String EXIT_BUTTON_LABEL = "Exit";
 
-    public static final String TRUEFALSE_BUTTON_LABEL = "True or False";
+    private EndGameState state = new EndGameState();
 
-    private SelectTypeState state = new SelectTypeState();
+    public EndGameViewModel(){super("End game");}
 
-    public SelectTypeViewModel(){super("What type");}
 
-    public void setState(SelectTypeState state) {this.state = state;}
+    public void setState(EndGameState state){this.state = state;}
+
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     @Override
@@ -28,5 +29,5 @@ public class SelectTypeViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 
-    public SelectTypeState getState() {return state;}
+    public EndGameState getState() {return state;}
 }

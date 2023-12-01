@@ -1,7 +1,6 @@
 package interface_adapter.Collect_Questions;
 
-
-import interface_adapter.login.LoginViewModel;
+import interface_adapter.select_type.SelectTypeState;
 import interface_adapter.select_type.SelectTypeViewModel;
 import use_case.collect_questions.CollectQuestionsOutputBoundary;
 import use_case.collect_questions.CollectQuestionsOutputData;
@@ -35,6 +34,12 @@ public class CollectQuestionsPresenter implements CollectQuestionsOutputBoundary
         String output = "You selected " + tot + " questions";
 
         JOptionPane.showMessageDialog(null, output, "Total", JOptionPane.INFORMATION_MESSAGE);
+
+        //Something like this will let you move data onto the next use case no problem
+        SelectTypeState selectTypeState = selectTypeViewModel.getState();
+        selectTypeState.setTotalQ(totalQ.getTotalQ());
+        this.selectTypeViewModel.setState(selectTypeState);
+        this.selectTypeViewModel.firePropertyChanged();
 
         //Next Case
         this.viewManagerModel.setActiveView(selectTypeViewModel.getViewName());

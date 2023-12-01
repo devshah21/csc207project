@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.select_type.SelectTypeState;
 import interface_adapter.select_type.SelectTypeViewModel;
 
 import javax.swing.*;
@@ -57,7 +58,14 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
             @Override
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(mulChoiceB)) {
-                    System.out.println("Place Holder2");
+
+                    SelectTypeState selectTypeState = new SelectTypeState();
+
+                    String totQ1 = selectTypeState.getTotalQ();
+
+                    System.out.println(totQ1 +" Place Holder2");
+                    //ALSO ADD PART TO SET VALUE IN NEXT USECASE'S STATE
+
                     // ADD THE NEXT VIEW MODEL HERE
                     //viewManagerModel.setActiveView(######.getViewName());
                     //viewManagerModel.firePropertyChanged();
@@ -69,7 +77,13 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
             @Override
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(trueFalseB)) {
-                    System.out.println("Place Holder1");
+
+                    SelectTypeState selectTypeState = new SelectTypeState();
+                    String totQ2 = selectTypeState.getTotalQ();
+
+                    System.out.println(totQ2 + "Place Holder1");
+                    //ALSO ADD PART TO SET VALUE IN NEXT USECASE'S STATE
+
                     // ADD THE NEXT VIEW MODEL HERE
                     //viewManagerModel.setActiveView(######.getViewName());
                     //viewManagerModel.firePropertyChanged();
