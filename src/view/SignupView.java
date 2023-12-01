@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.clear_users.ClearController;
 import interface_adapter.clear_users.ClearViewModel;
 import interface_adapter.signup.SignupController;
@@ -16,9 +17,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.View;
 import java.awt.event.*;
 import interface_adapter.login.LoginViewModel;
 import view.LoginView;
+import interface_adapter.signup.SignupPresenter;
 
 
 // Define the SignupView class, which is a Swing-based user interface.
@@ -36,14 +39,21 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JButton signUp;
     private final JButton logIn;
     private final JButton clear;
+    private final LoginViewModel loginViewModel;
+    private ViewManagerModel viewManagerModel;
 
 
     // Constructor for the SignupView class.
-    public SignupView(SignupController controller, SignupViewModel signupViewModel, ClearController clearController) {
+    public SignupView(SignupController controller, SignupViewModel signupViewModel, ClearController clearController,
+                      LoginViewModel loginViewModel, ViewManagerModel viewManagerModel) {
         this.setBackground(background);
         this.signupController = controller;
         this.signupViewModel = signupViewModel;
         this.clearController = clearController;
+        this.loginViewModel = loginViewModel;
+        this.viewManagerModel = viewManagerModel;
+
+
         signupViewModel.addPropertyChangeListener(this);
 
         // Create user interface elements.
@@ -130,7 +140,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
             @Override
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(logIn)) {
-
+                    viewManagerModel.setActiveView(loginViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
                 }
             }
         });
