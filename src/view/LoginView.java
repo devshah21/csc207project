@@ -80,7 +80,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                         if (evt.getSource().equals(logIn)) {
                             LoginState currentState = loginViewModel.getState();
 
-
                             loginController.execute(
                                     currentState.getUsername(),
                                     currentState.getPassword()
@@ -158,13 +157,15 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         LoginState state = (LoginState) evt.getNewValue();
 
         setFields(state);
-        if (state.getUsernameError().contains("Account")) {
-            JOptionPane.showMessageDialog(null, "User is not registered", "Error", JOptionPane.ERROR_MESSAGE);
+        if (state.getUsernameError() != null) {
+            JOptionPane.showMessageDialog(null, state.getUsernameError(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        else if  (state.getUsernameError().contains("password")) {
-            JOptionPane.showMessageDialog(null, "Incorrect password", "Error", JOptionPane.ERROR_MESSAGE);
+        else if  (state.getPasswordError() != null) {
+            JOptionPane.showMessageDialog(null, state.getPasswordError(), "Error", JOptionPane.ERROR_MESSAGE);
 
         }
+        state.resetPasswordError();
+        state.resetUsernameError();
         // fix code here
     }
 
