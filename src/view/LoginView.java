@@ -74,21 +74,24 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         cancel.setForeground(textColor);
         buttons.add(cancel);
         buttons.setBackground(background);
-        logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(logIn)) {
-                            LoginState currentState = loginViewModel.getState();
+        logIn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource().equals(logIn)) {
+                    LoginState currentState = loginViewModel.getState();
 
-
-                            loginController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getPassword()
-                            );
-                        }
+                    if (currentState.getUsername().isEmpty()) {
+                        // Username is empty, show an error pop-up
+                        JOptionPane.showMessageDialog(null, "Username cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        // Continue with login
+                        loginController.execute(
+                                currentState.getUsername(),
+                                currentState.getPassword()
+                        );
                     }
                 }
-        );
+            }
+        });
 
         cancel.addActionListener(this);
 

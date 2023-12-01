@@ -21,7 +21,6 @@ import javax.swing.text.View;
 import java.awt.event.*;
 import interface_adapter.login.LoginViewModel;
 import view.LoginView;
-import interface_adapter.signup.SignupPresenter;
 
 
 // Define the SignupView class, which is a Swing-based user interface.
