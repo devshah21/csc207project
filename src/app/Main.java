@@ -2,6 +2,7 @@ package app;
 
 import data_access.FileUserDataAccessObject;
 import entity.CommonUserFactory;
+import interface_adapter.Collect_Questions.CollectQuestionsViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.signup.SignupViewModel;
@@ -11,6 +12,7 @@ import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
 import view.ViewManager;
+import view.CollectQuestionsView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,12 +46,18 @@ public class Main {
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
 
+        // Collect_Questions View_Model here:
+        CollectQuestionsViewModel collectQuestionsViewModel = new CollectQuestionsViewModel();
+
         FileUserDataAccessObject userDataAccessObject;
         try {
             userDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        CollectQuestionsView collectQuestionsView = CollectQuestionsCaseFactory.create(viewManagerModel, collectQuestionsViewModel);
+        views.add(collectQuestionsView, collectQuestionsView.viewName);
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, userDataAccessObject);
         views.add(signupView, signupView.viewName);
