@@ -8,12 +8,10 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-class APIExpection extends Exception{}
 public class QuizAPI {
     private ArrayList<Question> questions;
 
-    public QuizAPI(int amount, String difficulty,String type, String catagory) throws IOException, InterruptedException, APIExpection {
+    public QuizAPI(int amount, String difficulty,String type, String catagory) throws IOException, InterruptedException, APIException {
         String API = String.format("https://opentdb.com/api.php?amount=%d&difficulty=%s&type=%s&category=%s", amount, difficulty, type, catagory);
         URI apiURL = URI.create(API);
         HttpRequest request = HttpRequest.newBuilder().uri(apiURL).GET().build();
@@ -43,7 +41,7 @@ public class QuizAPI {
             }
         }
         else{
-            throw new APIExpection();
+            throw new APIException();
         }
 
 
