@@ -2,6 +2,7 @@ package interface_adapter.Collect_Questions;
 
 
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.select_type.SelectTypeViewModel;
 import use_case.collect_questions.CollectQuestionsOutputBoundary;
 import use_case.collect_questions.CollectQuestionsOutputData;
 import interface_adapter.ViewManagerModel;
@@ -14,12 +15,15 @@ public class CollectQuestionsPresenter implements CollectQuestionsOutputBoundary
 
     private final CollectQuestionsViewModel collectQuestionsViewModel;
 
+    private final SelectTypeViewModel selectTypeViewModel;
+
     private ViewManagerModel viewManagerModel;
 
-    public CollectQuestionsPresenter(ViewManagerModel viewManagerModel, CollectQuestionsViewModel collectQuestionsViewModel) {
+    public CollectQuestionsPresenter(ViewManagerModel viewManagerModel, CollectQuestionsViewModel collectQuestionsViewModel, SelectTypeViewModel selectTypeViewModel) {
     // initalize new models to change to over here
+        this.viewManagerModel = viewManagerModel;
         this.collectQuestionsViewModel = collectQuestionsViewModel;
-
+        this.selectTypeViewModel = selectTypeViewModel;
     }
 
     // Both cases will tell a view model to fire pass will call a new view model to run, fail will call the old one to run again
@@ -29,9 +33,13 @@ public class CollectQuestionsPresenter implements CollectQuestionsOutputBoundary
         // Upon passing run something to switch to the main game View, work with Dev on this part
         String tot = totalQ.getTotalQ();
         String output = "You selected " + tot + " questions";
-        //System.out.println(output);
-        JOptionPane.showMessageDialog(null, output, "Error", JOptionPane.INFORMATION_MESSAGE);
-        // ADD POP UP WITH THIS INFO
+
+        JOptionPane.showMessageDialog(null, output, "Total", JOptionPane.INFORMATION_MESSAGE);
+
+        //Next Case
+        this.viewManagerModel.setActiveView(selectTypeViewModel.getViewName());
+
+        this.viewManagerModel.firePropertyChanged();
     }
 
     @Override

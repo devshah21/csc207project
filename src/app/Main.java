@@ -5,14 +5,11 @@ import entity.CommonUserFactory;
 import interface_adapter.Collect_Questions.CollectQuestionsViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.select_type.SelectTypeViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.login.LoginUserDataAccessInterface;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
-import view.CollectQuestionsView;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,8 +43,9 @@ public class Main {
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
 
-        // Collect_Questions View_Model here:
+        // New View_Model here:
         CollectQuestionsViewModel collectQuestionsViewModel = new CollectQuestionsViewModel();
+        SelectTypeViewModel selectTypeViewModel = new SelectTypeViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         try {
@@ -56,8 +54,11 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        CollectQuestionsView collectQuestionsView = CollectQuestionsCaseFactory.create(viewManagerModel, collectQuestionsViewModel);
+        CollectQuestionsView collectQuestionsView = CollectQuestionsCaseFactory.create(viewManagerModel, collectQuestionsViewModel, selectTypeViewModel );
         views.add(collectQuestionsView, collectQuestionsView.viewName);
+
+        SelectTypeView selectTypeView = new SelectTypeView(selectTypeViewModel, viewManagerModel);
+        views.add(selectTypeView, selectTypeView.viewName);
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, userDataAccessObject);
         views.add(signupView, signupView.viewName);
@@ -68,7 +69,7 @@ public class Main {
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
-        viewManagerModel.setActiveView(signupView.viewName);
+        viewManagerModel.setActiveView(collectQuestionsView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.setPreferredSize(new Dimension(1024,800));
