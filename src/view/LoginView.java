@@ -74,24 +74,21 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         cancel.setForeground(textColor);
         buttons.add(cancel);
         buttons.setBackground(background);
-        logIn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                if (evt.getSource().equals(logIn)) {
-                    LoginState currentState = loginViewModel.getState();
+        logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(logIn)) {
+                            LoginState currentState = loginViewModel.getState();
 
-                    if (currentState.getUsername().isEmpty()) {
-                        // Username is empty, show an error pop-up
-                        JOptionPane.showMessageDialog(null, "Username cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        // Continue with login
-                        loginController.execute(
-                                currentState.getUsername(),
-                                currentState.getPassword()
-                        );
+
+                            loginController.execute(
+                                    currentState.getUsername(),
+                                    currentState.getPassword()
+                            );
+                        }
                     }
                 }
-            }
-        });
+        );
 
         cancel.addActionListener(this);
 
@@ -159,7 +156,16 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         LoginState state = (LoginState) evt.getNewValue();
+
         setFields(state);
+        if (state.getUsernameError().contains("Account")) {
+            JOptionPane.showMessageDialog(null, "User is not registered", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else if  (state.getUsernameError().contains("password")) {
+            JOptionPane.showMessageDialog(null, "Incorrect password", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+        // fix code here
     }
 
     private void setFields(LoginState state) {
