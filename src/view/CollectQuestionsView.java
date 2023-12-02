@@ -65,7 +65,8 @@ public class CollectQuestionsView extends JPanel implements ActionListener, Prop
 
                             // This will invoke the controller
                             collectQuestionsController.execute(
-                                    currentState.getTotalQ()
+                                    currentState.getTotalQ(),
+                                    currentState.getUsername()
                             );
                         }
                     }

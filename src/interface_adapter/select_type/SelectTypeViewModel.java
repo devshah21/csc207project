@@ -15,15 +15,17 @@ public class SelectTypeViewModel extends ViewModel {
 
     public SelectTypeViewModel(){super("What type");}
 
-    public void setState(SelectTypeState state) {this.state = state;}
+    public void setState(SelectTypeState state) {
+
+        this.state = state;
+
+    }
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    @Override
     public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);
     }
 
-    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }

@@ -11,8 +11,8 @@ public class CollectQuestionsController {
     }
 
 
-    public void execute(String totalQ) {
-        CollectQuestionsInputData collectQuestionsInputData = new CollectQuestionsInputData(totalQ);
+    public void execute(String totalQ, String username) {
+        CollectQuestionsInputData collectQuestionsInputData = new CollectQuestionsInputData(totalQ, username);
         // Convert to integer in interactor
         // This will call the interactor
         collectQuestionsUseCaseInteractor.execute(collectQuestionsInputData);

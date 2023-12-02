@@ -59,11 +59,13 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(mulChoiceB)) {
 
-                    SelectTypeState selectTypeState = new SelectTypeState();
+                    // This should keep our latest one from collectQuestionsPresenter
 
+                    SelectTypeState selectTypeState = selectTypeViewModel.getState();
                     String totQ1 = selectTypeState.getTotalQ();
+                    String user1 = selectTypeState.getUsername();
 
-                    System.out.println(totQ1 +" Place Holder2");
+                    System.out.println(totQ1 +" " +user1 + " Place Holder2");
                     //ALSO ADD PART TO SET VALUE IN NEXT USECASE'S STATE
 
                     // ADD THE NEXT VIEW MODEL HERE
@@ -78,10 +80,11 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(trueFalseB)) {
 
-                    SelectTypeState selectTypeState = new SelectTypeState();
+                    SelectTypeState selectTypeState = selectTypeViewModel.getState();
                     String totQ2 = selectTypeState.getTotalQ();
+                    String user2 = selectTypeState.getUsername();
 
-                    System.out.println(totQ2 + "Place Holder1");
+                    System.out.println(totQ2 +" "+ user2+ " Place Holder1");
                     //ALSO ADD PART TO SET VALUE IN NEXT USECASE'S STATE
 
                     // ADD THE NEXT VIEW MODEL HERE
