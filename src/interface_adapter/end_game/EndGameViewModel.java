@@ -7,7 +7,7 @@ import java.beans.PropertyChangeSupport;
 
 public class EndGameViewModel extends ViewModel {
 
-    public static final String REPLAY_BUTTON_LABEL = "Replay";
+    public static final String REPLAY_BUTTON_LABEL = "New Game";
     public static final String EXIT_BUTTON_LABEL = "Exit";
 
     private EndGameState state = new EndGameState();

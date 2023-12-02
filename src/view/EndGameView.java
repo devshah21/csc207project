@@ -28,10 +28,12 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
 
    private final JButton exit;
 
+
    // Only button with use case linked to this
 
    //private final JButton leaderboards;
-
+   private Color background = new Color(57,54,70);
+   private Color textColor = new Color(244, 238, 224);
    private final JLabel totalQErrorField = new JLabel();
 
    JLabel userOutput;
@@ -41,12 +43,15 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
    public EndGameView(EndGameViewModel endGameViewModel, SignupViewModel signupViewModel,
                       CollectQuestionsViewModel collectQuestionsViewModel, ViewManagerModel viewManagerModel){
 
-
+      this.setLayout(null);
+      this.setBackground(background);
       //this.endGameController = controller;
       this.endGameViewModel = endGameViewModel;
       this.endGameViewModel.addPropertyChangeListener(this);
 
       JLabel title = new JLabel("Results");
+      title.setFont(new Font("Arial",Font.BOLD,24));
+      title.setForeground(textColor);
       title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
       // This is all to display the result grabbed from Devs useCase
@@ -64,12 +69,9 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
       JLabel userOutputLB = new JLabel(outputLBoard);
       userOutputLB.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-      JPanel buttons = new JPanel();
       replay = new JButton(EndGameViewModel.REPLAY_BUTTON_LABEL);
-      buttons.add(replay);
-
       exit = new JButton(EndGameViewModel.EXIT_BUTTON_LABEL);
-      buttons.add(exit);
+
 
       replay.addActionListener(                // Starts the game again
               new ActionListener() {
@@ -85,23 +87,29 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
       );
 
       exit.addActionListener(                // Returns to signup
-              new ActionListener() {
-                 public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(exit)) {
+              evt -> {
+                 if (evt.getSource().equals(exit)) {
 
-                       viewManagerModel.setActiveView(signupViewModel.getViewName());
-                       viewManagerModel.firePropertyChanged();
+                    viewManagerModel.setActiveView(signupViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
 
-                    }
                  }
               }
       );
 
+      // Set the positions of the panels (Frame is 1024x800)
+      title.setBounds(480,0,200,100);
+      exit.setBounds(700,400,200,100);
+      replay.setBounds(700,200,200,100);
+
+
+
+      // Adding to Panel
       this.add(title);
       this.add(userOutput);
       this.add(userOutputLB);
-      this.add(buttons);
-
+      this.add(exit);
+      this.add(replay);
    }
 
 
