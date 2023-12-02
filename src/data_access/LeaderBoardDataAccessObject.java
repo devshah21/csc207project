@@ -42,8 +42,6 @@ public class LeaderBoardDataAccessObject {
     // This case is to run within a interactor, it will take the username of the player, their score, the number of questions they had
     // and the type of game they played, and ethier add them to leaderboard or not, in the end two strings with both leaderboards will be
     // outputed
-
-    // NEED TO ADD A SOILD CHECK TO MAKE SURE OTHER CASE IS MULTIPLE CHOICE AND NOT JUST ANYTHING
     public String[] generateLeaderBoards(String username, int score, String numQuestions, String gameType, String questionType ){
 
         String mulChoiceLeaders = "";
@@ -110,12 +108,12 @@ public class LeaderBoardDataAccessObject {
                         //Next add another line to the output String
                         if (gameType.equals("trueOrFalse")){
                             tfQDone = tfQDone + 1;
-                            trueOrFalseLeaders = trueOrFalseLeaders + tfQDone + ". " + username + ": "+ score + " : " + "With " + numQuestions
-                                    + " questions: " + gameType + "\n";
+                            trueOrFalseLeaders = trueOrFalseLeaders + tfQDone + ". " + username + ": "+ score + " : " + "In " + numQuestions
+                                    + " questions: " + questionType + "\n";
                         }else {
                             mulQDone = mulQDone + 1;
-                            mulChoiceLeaders = mulChoiceLeaders + mulQDone + ". " + username + ": "+ score + " : " + "With " + numQuestions
-                                    + " questions: " + gameType + "\n";
+                            mulChoiceLeaders = mulChoiceLeaders + mulQDone + ". " + username + ": "+ score + " : " + "In " + numQuestions
+                                    + " questions: " + questionType + "\n";
 
                         }
 
@@ -129,12 +127,12 @@ public class LeaderBoardDataAccessObject {
                     // Its not so add the line to out final string
                     else if (leaderParts[3].equals("trueOrFalse")){
                         tfQDone = tfQDone + 1;
-                        trueOrFalseLeaders = trueOrFalseLeaders + tfQDone + ". " + leaderParts[0] + ": "+ leaderParts[1] + " : " + "With " + leaderParts[2]
-                                + " questions: " + leaderParts[3] + "\n";
+                        trueOrFalseLeaders = trueOrFalseLeaders + tfQDone + ". " + leaderParts[0] + ": "+ leaderParts[1] + " : " + "In " + leaderParts[2]
+                                + " questions: " + leaderParts[4] + "\n";
                     }else {
                         mulQDone = mulQDone + 1;
-                        mulChoiceLeaders = mulChoiceLeaders + mulQDone + ". " + leaderParts[0] + ": "+ leaderParts[1] + " : " + "With " + leaderParts[2]
-                                + " questions: " + leaderParts[3] + "\n";
+                        mulChoiceLeaders = mulChoiceLeaders + mulQDone + ". " + leaderParts[0] + ": "+ leaderParts[1] + " : " + "In " + leaderParts[2]
+                                + " questions: " + leaderParts[4] + "\n";
 
                     }
                 }
@@ -144,12 +142,12 @@ public class LeaderBoardDataAccessObject {
                     // Its not so add the line to out final string
                     if (leaderParts[3].equals("trueOrFalse")){
                         tfQDone = tfQDone + 1;
-                        trueOrFalseLeaders = trueOrFalseLeaders + tfQDone + ". " + leaderParts[0] + ": "+ leaderParts[1] + " : " + "With " + leaderParts[2]
-                                + " questions: " + leaderParts[3] + "\n";
+                        trueOrFalseLeaders = trueOrFalseLeaders + tfQDone + ". " + leaderParts[0] + ": "+ leaderParts[1] + " : " + "In " + leaderParts[2]
+                                + " questions: " + leaderParts[4] + "\n";
                     }else {
                         mulQDone = mulQDone + 1;
-                        mulChoiceLeaders = mulChoiceLeaders + mulQDone + ". " + leaderParts[0] + ": "+ leaderParts[1] + " : " + "With " + leaderParts[2]
-                                + " questions: " + leaderParts[3] + "\n";
+                        mulChoiceLeaders = mulChoiceLeaders + mulQDone + ". " + leaderParts[0] + ": "+ leaderParts[1] + " : " + "In " + leaderParts[2]
+                                + " questions: " + leaderParts[4] + "\n";
 
                     }
 
@@ -167,8 +165,8 @@ public class LeaderBoardDataAccessObject {
 
                     if (!firstOne && gameType.equals("trueOrFalse")){
                         System.out.println("incorrect");
-                        trueOrFalseLeaders = trueOrFalseLeaders + tfQDone + ". " + username + ": "+ score + " : " + "With " + numQuestions
-                                + " questions: " + gameType + "\n";
+                        trueOrFalseLeaders = trueOrFalseLeaders + tfQDone + ". " + username + ": "+ score + " : " + "In " + numQuestions
+                                + " questions: " + questionType + "\n";
 
                         newLeader = username +","+ String.valueOf(score) +","+ numQuestions + ","+ gameType +","+ questionType;
                         oldLines = oldLines + newLeader;
@@ -185,10 +183,10 @@ public class LeaderBoardDataAccessObject {
 
                 while (mulQDone != 10){
                     mulQDone = mulQDone + 1;
-                    if (!firstOne){
+                    if (!firstOne && !gameType.equals("trueOrFalse")){
                         System.out.println("correct");
-                        mulChoiceLeaders = mulChoiceLeaders + mulQDone + ". " + username + ": "+ score + " : " + "With " + numQuestions
-                                + " questions: " + gameType + "\n";
+                        mulChoiceLeaders = mulChoiceLeaders + mulQDone + ". " + username + ": "+ score + " : " + "In " + numQuestions
+                                + " questions: " + questionType + "\n";
 
                         newLeader = username +","+ String.valueOf(score) +","+ numQuestions +","+ gameType +","+ questionType;
                         oldLines = oldLines + newLeader;
