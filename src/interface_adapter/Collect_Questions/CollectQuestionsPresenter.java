@@ -37,7 +37,11 @@ public class CollectQuestionsPresenter implements CollectQuestionsOutputBoundary
 
         //Something like this will let you move data onto the next use case no problem
         SelectTypeState selectTypeState = selectTypeViewModel.getState();
+        selectTypeState.setUsername(totalQ.getUsername());
         selectTypeState.setTotalQ(totalQ.getTotalQ());
+
+        //System.out.println(selectTypeState.getTotalQ());
+
         this.selectTypeViewModel.setState(selectTypeState);
         this.selectTypeViewModel.firePropertyChanged();
 

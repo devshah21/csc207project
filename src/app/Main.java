@@ -1,6 +1,8 @@
 package app;
 
 import data_access.FileUserDataAccessObject;
+import data_access.LeaderBoardDataAccessObject;
+import data_access.SaveScoreDataAccessObject;
 import entity.CommonUserFactory;
 import interface_adapter.Collect_Questions.CollectQuestionsViewModel;
 import interface_adapter.end_game.EndGameViewModel;
@@ -57,6 +59,20 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        // New DAO being set up
+        LeaderBoardDataAccessObject leaderBoardDataAccessObject;
+
+        leaderBoardDataAccessObject = new LeaderBoardDataAccessObject("./leaderboard.csv");
+
+        // Initialize the SaveScoreDAO and LeaderBoardDAO for work (add to factory and send to your interactor if you want to use it)\
+        // Also implement a interface for both of these
+        SaveScoreDataAccessObject saveScoreDataAccessObject;
+        try {
+                saveScoreDataAccessObject= new SaveScoreDataAccessObject("src/users.csv");
+
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
         // New Stuff
 
         CollectQuestionsView collectQuestionsView = CollectQuestionsCaseFactory.create(viewManagerModel, collectQuestionsViewModel, selectTypeViewModel );
@@ -75,13 +91,13 @@ public class Main {
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, collectQuestionsViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
-        viewManagerModel.setActiveView(signupView.viewName);
+        viewManagerModel.setActiveView(endGameView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.setPreferredSize(new Dimension(1024,800));

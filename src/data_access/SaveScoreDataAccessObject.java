@@ -8,24 +8,23 @@ import java.io.IOException;
 public class SaveScoreDataAccessObject {
 
     // Needs the current users final score and username to function correctly
-    private final int totScore;
-    private final String userName;
+
+    private final String csvPath;
 
     // Prevent instantiation. */
-    public SaveScoreDataAccessObject(int totScore, String userName) throws IOException {
-        this.totScore = totScore;
-        this.userName = userName;
+    public SaveScoreDataAccessObject(String csvPath) throws IOException {
+
+        this.csvPath = csvPath ;
 
     }
 
-    public boolean CheckIfHighScore() throws IOException {
+    public boolean CheckIfHighScore(int totScore, String userName) throws IOException {
 
         // This will look at the highscore we got from the game and check if player beat their highscore, if they did then new highscore is writen in place
         // of the old one if not then nothing happens, this programs lets what called it know if a new highscore was reached or not by returning a
         // boolean false for no highscore and true for yes highscore
 
-        String fileName = "C:\\Users\\Zafar\\IdeaProjects\\SaveScoreCode\\src\\Scores.txt"; //File to be read (CHANGE THIS TO WHATEVER YOU WANT TO HOOK IT UP TO, AS LONG AS IT FOLLOWS THE SAME FORMAT)
-        BufferedReader fr = new BufferedReader(new java.io.FileReader(fileName));
+        BufferedReader fr = new BufferedReader(new java.io.FileReader(csvPath));
 
         String currLine;
         String[] userParts;
@@ -75,7 +74,7 @@ public class SaveScoreDataAccessObject {
         String newLines = oldLines.replaceAll(oldUser, newUser);
 
         // Rewrite the file, now with the news lines
-        FileWriter wr = new FileWriter(fileName);
+        FileWriter wr = new FileWriter(csvPath);
         wr.write(newLines);
 
         fr.close();

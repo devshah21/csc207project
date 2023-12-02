@@ -1,6 +1,8 @@
 package use_case.collect_questions;
 
 
+import interface_adapter.Collect_Questions.CollectQuestionsState;
+
 public class CollectQuestionInteractor implements CollectQuestionsInputBoundary {
 
 
@@ -17,6 +19,7 @@ public class CollectQuestionInteractor implements CollectQuestionsInputBoundary 
     public void execute(CollectQuestionsInputData collectQuestionsInputData) {
 
         String totalQW = collectQuestionsInputData.getTotalQ();
+        String userName = collectQuestionsInputData.getUsername();
 
         // over here check if we have a string or not
         try {
@@ -27,7 +30,7 @@ public class CollectQuestionInteractor implements CollectQuestionsInputBoundary 
                 collectQuestionsPresenter.prepareFailView("Input correct value");
 
             this.totalQI = totalQI;
-            CollectQuestionsOutputData collectQuestionsOutputData = new CollectQuestionsOutputData(totalQW, false);
+            CollectQuestionsOutputData collectQuestionsOutputData = new CollectQuestionsOutputData(totalQW, userName,  false);
             collectQuestionsPresenter.prepareSuccessView(collectQuestionsOutputData);
 
         }
