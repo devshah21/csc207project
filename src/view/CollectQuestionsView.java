@@ -1,8 +1,12 @@
 package view;
 
-import interface_adapter.Collect_Questions.CollectQuestionsController;
-import interface_adapter.Collect_Questions.CollectQuestionsState;
+import interface_adapter.login.LoginState;
+import interface_adapter.login.LoginViewModel;
+import interface_adapter.signup.SignupController;
+import interface_adapter.signup.SignupViewModel;
 import interface_adapter.Collect_Questions.CollectQuestionsViewModel;
+import interface_adapter.Collect_Questions.CollectQuestionsState;
+import interface_adapter.Collect_Questions.CollectQuestionsController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,20 +43,23 @@ public class CollectQuestionsView extends JPanel implements ActionListener, Prop
 
         JPanel totalQInfo = new JPanel();
         totalQInfo.setBackground(background);
-        totalQInfo.setLayout(new BoxLayout(totalQInfo, BoxLayout.Y_AXIS));
+        totalQInfo.setLayout(new BoxLayout(totalQInfo, BoxLayout.Y_AXIS));  // Use BoxLayout for vertical alignment
 
         JPanel inputPanel = new JPanel();
         JLabel questions = new JLabel("Questions");
         inputPanel.setBackground(background);
         inputPanel.add(questions);
-        inputPanel.add(Box.createRigidArea(new Dimension(10, 0)));  // Add a small gap between the label and input field
         inputPanel.add(questionNumberInputField);
+        questions.setForeground(textColor);
+        questionNumberInputField.setForeground(Color.BLACK);
 
+        totalQInfo.add(Box.createVerticalGlue());  // Add glue to push the input field to the center
         totalQInfo.add(inputPanel);
+        totalQInfo.add(Box.createVerticalGlue());  // Add glue to push the input field to the center
 
         JPanel buttons = new JPanel();
         buttons.setBackground(background);
-        buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttons.setAlignmentX(Component.CENTER_ALIGNMENT);  // Center the buttons panel
         enter = new JButton(collectQuestionsViewModel.ENTER_BUTTON_LABEL);
         enter.setFont(new Font("Arial", Font.BOLD, 18));
         enter.addActionListener(evt -> {
@@ -68,11 +75,11 @@ public class CollectQuestionsView extends JPanel implements ActionListener, Prop
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBackground(background);
+        this.add(Box.createVerticalGlue());  // Add glue to push the title above the input field
         this.add(title);
         this.add(totalQInfo);
         this.add(totalQErrorField);
         this.add(buttons);
-
         questionNumberInputField.setForeground(textColor);
         questionNumberInputField.addKeyListener(new KeyListener() {
             @Override
@@ -90,6 +97,15 @@ public class CollectQuestionsView extends JPanel implements ActionListener, Prop
             public void keyReleased(KeyEvent e) {
             }
         });
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setBackground(background);
+        this.add(title);
+        this.add(totalQInfo);
+        this.add(totalQErrorField);
+        this.add(buttons);
+
+        // ... (existing code)
     }
 
     @Override
