@@ -103,7 +103,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
 
         JPanel buttons = new JPanel();
-
+        buttons.setBackground(background);
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
         signUp.setBackground(new Color(79, 69, 87));
         signUp.setForeground(textColor);
