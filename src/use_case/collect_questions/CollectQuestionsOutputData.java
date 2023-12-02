@@ -5,13 +5,20 @@ public class CollectQuestionsOutputData {
     private final String totalQ;
     private boolean didUseCaseFailed;
 
-    public CollectQuestionsOutputData(String totalQ, boolean didUseCaseFailed) {
+    private final String username;
+
+    public CollectQuestionsOutputData(String totalQ, String username,  boolean didUseCaseFailed) {
         this.totalQ = totalQ;
         this.didUseCaseFailed = didUseCaseFailed;
+        this.username = username;
     }
 
     public String getTotalQ() {
         return totalQ;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
 }

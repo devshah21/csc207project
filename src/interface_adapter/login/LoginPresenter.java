@@ -1,5 +1,7 @@
 package interface_adapter.login;
 
+import interface_adapter.Collect_Questions.CollectQuestionsState;
+import interface_adapter.Collect_Questions.CollectQuestionsViewModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.ViewManagerModel;
@@ -12,14 +14,14 @@ import use_case.signup.SignupOutputData;
 public class LoginPresenter implements LoginOutputBoundary {
 
     private final LoginViewModel loginViewModel;
-    private final LoggedInViewModel loggedInViewModel;
+    private final CollectQuestionsViewModel collectQuestionsViewModel;
     private ViewManagerModel viewManagerModel;
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
-                          LoggedInViewModel loggedInViewModel,
+                          CollectQuestionsViewModel collectQuestionsViewModel,
                           LoginViewModel loginViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.loggedInViewModel = loggedInViewModel;
+        this.collectQuestionsViewModel = collectQuestionsViewModel;
         this.loginViewModel = loginViewModel;
     }
 
@@ -27,12 +29,13 @@ public class LoginPresenter implements LoginOutputBoundary {
     public void prepareSuccessView(LoginOutputData response) {
         // On success, switch to the logged in view.
 
-        LoggedInState loggedInState = loggedInViewModel.getState();
-        loggedInState.setUsername(response.getUsername());
-        this.loggedInViewModel.setState(loggedInState);
-        this.loggedInViewModel.firePropertyChanged();
+        // Move username to collectQuestion
+        CollectQuestionsState collectQuestionsState = collectQuestionsViewModel.getState();
+        collectQuestionsState.setUsername(response.getUsername());
+        this.collectQuestionsViewModel.setState(collectQuestionsState);
+        this.collectQuestionsViewModel.firePropertyChanged();
 
-        this.viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+        this.viewManagerModel.setActiveView(collectQuestionsViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
 
