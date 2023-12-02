@@ -7,8 +7,13 @@ import java.beans.PropertyChangeSupport;
 
 public class EndGameViewModel extends ViewModel {
 
-    public static final String REPLAY_BUTTON_LABEL = "Replay";
+    public static final String REPLAY_BUTTON_LABEL = "New Game";
     public static final String EXIT_BUTTON_LABEL = "Exit";
+    public static final String USER_RESULT_LABEL = "Your Score";
+    public static final String TITLE = "Results";
+    public static String MCQ_LEADERBOARD_LABEL = "Top Multiple Choice Scores";
+
+    public static String TF_LEADERBOARD_LAVEL = "Top True/False Scores";
 
     private EndGameState state = new EndGameState();
 
