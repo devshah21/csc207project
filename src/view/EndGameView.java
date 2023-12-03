@@ -166,14 +166,14 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
 
       // Set the positions of the panels (Frame is 1024x800)
       title.setBounds(450,0,200,100);
-      exit.setBounds(700,400,200,100);
-      replay.setBounds(700,200,200,100);
-      userOutputLBMCQ.setBounds(55,170,250,200);
-      userOutputLBTF.setBounds(345,170,250,200);
-      MCQLabel.setBounds(55, 45,500,200);
-      TFLabel.setBounds(345, 45,500,200);
-      userScoreTitle.setBounds(225,390,200,100);
-      userScore.setBounds(225,425,200,95);
+      exit.setBounds(565,600,200,100);
+      replay.setBounds(565,490,200,100);
+      userOutputLBMCQ.setBounds(35,170,400,300);
+      userOutputLBTF.setBounds(455,170,400,300);
+      MCQLabel.setBounds(35, 45,500,200);
+      TFLabel.setBounds(455, 45,500,200);
+      userScoreTitle.setBounds(55,500,200,100);
+      userScore.setBounds(55,535,400,125);
 
       // Adding to Panel
       this.add(title);
