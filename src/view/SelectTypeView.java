@@ -1,7 +1,6 @@
 package view;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.select_type.SelectTypeState;
 import interface_adapter.select_type.SelectTypeViewModel;
 
 import javax.swing.*;
@@ -10,16 +9,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
+import interface_adapter.select_type.SelectTypeState;
 public class SelectTypeView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    // FORMAT THE BUTTONS AND LABELS HERE INTO SOMETHING THAT DOESNT LOOK LIKE TRASH PLEASE
+// FORMAT THE BUTTONS AND LABELS HERE INTO SOMETHING THAT DOESNT LOOK LIKE TRASH PLEASE
 
     public final String trueFalse = "True or False";
 
     public final String mulChoice = "True or False";
 
-    public final String viewName = "What type";
+    public static final String viewName = "What type";
 
     // Some J stuff down here:
     private final JButton trueFalseB;
@@ -28,11 +27,14 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
 
     private final SelectTypeViewModel selectTypeViewModel;
 
-    //private final SelectTypeController selectTypeController;
+//private final SelectTypeController selectTypeController;
 
     private final ViewManagerModel viewManagerModel;
 
     private final JLabel selectTypeErrorField = new JLabel();
+
+    private Color background = new Color(57, 54, 70);
+    private Color textColor = new Color(244, 238, 224);
 
     public SelectTypeView(SelectTypeViewModel selectTypeViewModel, ViewManagerModel viewManagerModel ){
 
@@ -40,19 +42,33 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
         this.selectTypeViewModel = selectTypeViewModel;
         this.selectTypeViewModel.addPropertyChangeListener(this);
         this.viewManagerModel = viewManagerModel;
-        // Top label
+// Top label
         JLabel title = new JLabel("What type of game do you want to play?");
+        title.setFont(new Font("Arial", Font.BOLD, 20));
+        title.setForeground(textColor);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Button setups
-        JPanel buttons = new JPanel();
-        mulChoiceB = new JButton(selectTypeViewModel.MULCHOICE_BUTTON_LABEL);
-        buttons.add(mulChoiceB);
+// Button setups
+        mulChoiceB = new JButton("Multiple Choice");
+        mulChoiceB.setFont(new Font("Arial", Font.BOLD, 18));
+        mulChoiceB.addActionListener(this);
+        mulChoiceB.setPreferredSize(new Dimension(180, 60));
 
-        trueFalseB = new JButton(selectTypeViewModel.TRUEFALSE_BUTTON_LABEL);
-        buttons.add(trueFalseB);
+        trueFalseB = new JButton("True/False");
+        trueFalseB.setFont(new Font("Arial", Font.BOLD, 18));
+        trueFalseB.addActionListener(this);
+        trueFalseB.setPreferredSize(new Dimension(180, 60));
 
-        // Controller calls
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(background);
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.add(Box.createHorizontalGlue());
+        buttonPanel.add(mulChoiceB);
+        buttonPanel.add(Box.createHorizontalStrut(20));
+        buttonPanel.add(trueFalseB);
+        buttonPanel.add(Box.createHorizontalGlue());
+
+// Controller calls
 
         mulChoiceB.addActionListener(new ActionListener() {
             @Override
@@ -66,7 +82,7 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
                     String user1 = selectTypeState.getUsername();
 
                     System.out.println(totQ1 +" " +user1 + " Place Holder2");
-                    //ALSO ADD PART TO SET VALUE IN NEXT USECASE'S STATE
+//ALSO ADD PART TO SET VALUE IN NEXT USECASE'S STATE
 
                     // ADD THE NEXT VIEW MODEL HERE
                     //viewManagerModel.setActiveView(######.getViewName());
@@ -85,7 +101,7 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
                     String user2 = selectTypeState.getUsername();
 
                     System.out.println(totQ2 +" "+ user2+ " Place Holder1");
-                    //ALSO ADD PART TO SET VALUE IN NEXT USECASE'S STATE
+//ALSO ADD PART TO SET VALUE IN NEXT USECASE'S STATE
 
                     // ADD THE NEXT VIEW MODEL HERE
                     //viewManagerModel.setActiveView(######.getViewName());
@@ -94,12 +110,14 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
             }
         });
 
-        // THIS WILL FORM THE BASIC DUMMY GUI
+// THIS WILL FORM THE BASIC DUMMY GUI
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setBackground(background);
+        this.add(Box.createVerticalGlue());
         this.add(title);
-        this.add(selectTypeErrorField);
-        this.add(buttons);
-
+        this.add(Box.createVerticalStrut(20));
+        this.add(buttonPanel);
+        this.add(Box.createVerticalGlue());
     }
 
     @Override
