@@ -19,6 +19,9 @@ public class TruefalseState {
         category = test.category;
     }
 
+    public TruefalseState() {
+    }
+
 
     public String getUsername1() {
         return username;
