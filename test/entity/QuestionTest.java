@@ -1,4 +1,4 @@
-package entites_test;
+package entity;
 
 import entity.Question;
 import entity.QuestionFactory;
