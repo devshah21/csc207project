@@ -15,9 +15,7 @@ public class TruefalseInputData {
     }
 
     // getters
-    public int getAmount() {
-        return amount;
-    }
+    public int getAmount() { return amount; }
 
     public String getDifficulty() {
         return difficulty;
