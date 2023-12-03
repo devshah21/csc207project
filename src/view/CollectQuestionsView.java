@@ -55,6 +55,7 @@ public class CollectQuestionsView extends JPanel implements ActionListener, Prop
 
         totalQInfo.add(Box.createVerticalGlue());  // Add glue to push the input field to the center
         totalQInfo.add(inputPanel);
+
         totalQInfo.add(Box.createVerticalGlue());  // Add glue to push the input field to the center
 
         JPanel buttons = new JPanel();
@@ -80,7 +81,7 @@ public class CollectQuestionsView extends JPanel implements ActionListener, Prop
         this.add(totalQInfo);
         this.add(totalQErrorField);
         this.add(buttons);
-        questionNumberInputField.setForeground(textColor);
+
         questionNumberInputField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
