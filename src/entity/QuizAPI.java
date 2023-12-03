@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 public class QuizAPI {
-    private ArrayList<Question> questions;
+    private ArrayList<Question> questions = new ArrayList<>();
 
     public QuizAPI(int amount, String difficulty,String type, String catagory) throws IOException, InterruptedException, APIException {
         String API = String.format("https://opentdb.com/api.php?amount=%d&difficulty=%s&type=%s&category=%s", amount, difficulty, type, catagory);
@@ -34,9 +34,8 @@ public class QuizAPI {
                         obj.get("difficulty").toString(),
                         obj.get("question").toString(),
                         obj.get("correct_answer").toString(),
-                        lst
-
-                );
+                        lst);
+                questions.add(q);
 
             }
         }
@@ -48,6 +47,6 @@ public class QuizAPI {
     }
 
     public ArrayList<Question> getQuestions(){
-        return (ArrayList<Question>) questions.clone();
+        return this.questions;
     }
 }
