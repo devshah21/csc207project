@@ -6,6 +6,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.end_game.EndGameState;
 import interface_adapter.end_game.EndGameViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.select_type.SelectTypeState;
 import interface_adapter.signup.SignupViewModel;
 import use_case.collect_questions.CollectQuestionInteractor;
 
@@ -60,15 +61,22 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
       title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
       // This is all to display the result grabbed from Devs useCase
-      EndGameState endGameState = new EndGameState();
+      EndGameState endGameState = endGameViewModel.getState();
+      // Display outputs
       String output = endGameState.getOutput();
+      String leaderBoardTF = endGameState.getLBTF();
+      String leaderBoardMul = endGameState.getLBMul();
+
+      //leaderBoardTF = "1. Kobe: 11 : In 7 questions: Lebron James"; // EXAMPLE DISPLAY FOR LEADER BOARD
+      // If user wants to play again
+      String username = endGameState.getUsername();
 
       //TODO: Add User Score implementation here [Get rid of temp "10" value]
       JLabel userScoreTitle = new JLabel(EndGameViewModel.USER_RESULT_LABEL);
       userScoreTitle.setFont(new Font("Arial",Font.BOLD,24));
       userScoreTitle.setForeground(textColor);
 
-      userScore = new JLabel("10");
+      userScore = new JLabel(output); // Display user score info
       userScore.setForeground(textColor);
       userScore.setBackground(new Color(57, 55, 64));
       userScore.setFont(new Font("Arial",Font.BOLD, 20));
@@ -93,13 +101,11 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
               GamingLegend - 55,000""";
 
 
-      String TFLeaderBoard = ""; //TODO: Fill this with the leaderboard
-
       //Replace outputLBoard with placeholder while updating GUI
-      userOutputLBMCQ = new JTextArea(outputLBoard);
+      userOutputLBMCQ = new JTextArea(leaderBoardMul);
       userOutputLBMCQ.setForeground(textColor);
       userOutputLBMCQ.setBackground(new Color(57, 55, 64));
-      userOutputLBMCQ.setFont(new Font("Arial",Font.PLAIN, 14));
+      userOutputLBMCQ.setFont(new Font("Arial",Font.PLAIN, 12));
       userOutputLBMCQ.setAlignmentX(Component.LEFT_ALIGNMENT);
       userOutputLBMCQ.setBorder(blackLine);
       //Set MCQ Label
@@ -108,10 +114,10 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
       MCQLabel.setForeground(textColor);
 
 
-      userOutputLBTF = new JTextArea(outputLBoard); //TODO: MAKE SURE YOU CHANGE THIS
+      userOutputLBTF = new JTextArea(leaderBoardTF); //TODO: MAKE SURE YOU CHANGE THIS
       userOutputLBTF.setForeground(textColor);
       userOutputLBTF.setBackground(new Color(57, 55, 64));
-      userOutputLBTF.setFont(new Font("Arial",Font.PLAIN, 14));
+      userOutputLBTF.setFont(new Font("Arial",Font.PLAIN, 12));
       userOutputLBTF.setAlignmentX(Component.LEFT_ALIGNMENT);
       userOutputLBTF.setBorder(blackLine);
 
@@ -132,8 +138,15 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
                  public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource().equals(replay)) {
 
-                           viewManagerModel.setActiveView(collectQuestionsViewModel.getViewName());
-                           viewManagerModel.firePropertyChanged();
+                       // Give username to collectQuestions
+                       CollectQuestionsState collectQuestionsState = collectQuestionsViewModel.getState();
+                       collectQuestionsState.setUsername(username);
+                       collectQuestionsViewModel.setState(collectQuestionsState);
+                       collectQuestionsViewModel.firePropertyChanged();
+
+                       // Change the view
+                       viewManagerModel.setActiveView(collectQuestionsViewModel.getViewName());
+                       viewManagerModel.firePropertyChanged();
 
                     }
                  }
@@ -153,14 +166,14 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
 
       // Set the positions of the panels (Frame is 1024x800)
       title.setBounds(450,0,200,100);
-      exit.setBounds(700,400,200,100);
-      replay.setBounds(700,200,200,100);
-      userOutputLBMCQ.setBounds(55,170,250,200);
-      userOutputLBTF.setBounds(345,170,250,200);
-      MCQLabel.setBounds(55, 45,500,200);
-      TFLabel.setBounds(345, 45,500,200);
-      userScoreTitle.setBounds(225,390,200,100);
-      userScore.setBounds(225,425,200,95);
+      exit.setBounds(565,600,200,100);
+      replay.setBounds(565,490,200,100);
+      userOutputLBMCQ.setBounds(35,170,400,300);
+      userOutputLBTF.setBounds(455,170,400,300);
+      MCQLabel.setBounds(35, 45,500,200);
+      TFLabel.setBounds(455, 45,500,200);
+      userScoreTitle.setBounds(55,500,200,100);
+      userScore.setBounds(55,535,400,125);
 
       // Adding to Panel
       this.add(title);
