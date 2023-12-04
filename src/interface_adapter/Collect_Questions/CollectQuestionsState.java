@@ -37,5 +37,11 @@ public class CollectQuestionsState {
         this.totalQError = totalQError;
     }
 
+    public String getTotalQError() {
+        return totalQError;
+    }
+
+    public void resetTotalQError() {this.totalQError = null;}
+
 
 }

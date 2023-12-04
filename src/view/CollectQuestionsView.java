@@ -113,6 +113,7 @@ public class CollectQuestionsView extends JPanel implements ActionListener, Prop
     public void propertyChange(PropertyChangeEvent evt) {
         CollectQuestionsState state = (CollectQuestionsState) evt.getNewValue();
         setFields(state);
+        state.resetTotalQError();
     }
 
     private void setFields(CollectQuestionsState state) {

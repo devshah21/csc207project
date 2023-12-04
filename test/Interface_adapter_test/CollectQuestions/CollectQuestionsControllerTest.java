@@ -1,4 +1,4 @@
-package Interface_adapter_test;
+package Interface_adapter_test.CollectQuestions;
 
 
 import app.CollectQuestionsCaseFactory;
@@ -54,8 +54,6 @@ public class CollectQuestionsControllerTest {
         // Not here to test state so lets just throw in some assumed variables
 
         // Act
-        //CollectQuestionsCaseFactory.create(viewManagerModel, collectQuestionsViewModel, selectTypeViewModel);
-
         collectQuestionsController.execute("17", "Bob Ross");
 
 
