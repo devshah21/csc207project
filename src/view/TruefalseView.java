@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import entity.QuizAPI;
-
-
+import interface_adapter.truefalse.TruefalseState;
+import interface_adapter.truefalse.TruefalseViewModel;
 
 
 public class TruefalseView extends JPanel implements ActionListener, PropertyChangeListener {

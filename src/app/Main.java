@@ -9,6 +9,7 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.select_type.SelectTypeViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.truefalse.TruefalseViewModel;
 import use_case.login.LoginUserDataAccessInterface;
 import view.*;
 
@@ -49,7 +50,7 @@ public class Main {
         SelectTypeViewModel selectTypeViewModel = new SelectTypeViewModel();
 
         EndGameViewModel endGameViewModel = new EndGameViewModel();
-
+        TruefalseViewModel truefalseViewModel = new TruefalseViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         try {
@@ -62,6 +63,9 @@ public class Main {
 
         CollectQuestionsView collectQuestionsView = CollectQuestionsCaseFactory.create(viewManagerModel, collectQuestionsViewModel, selectTypeViewModel );
         views.add(collectQuestionsView, collectQuestionsView.viewName);
+
+
+
 
         // WILL NEED TO BE CHANGED INTO A FACTORY WHEN THE 1/2 OUTPUT VIEWS FROM THE BUTTONS ARE READY
         SelectTypeView selectTypeView = new SelectTypeView(selectTypeViewModel, viewManagerModel);
