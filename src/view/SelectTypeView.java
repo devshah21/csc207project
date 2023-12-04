@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import interface_adapter.select_type.SelectTypeState;
+import interface_adapter.truefalse.TruefalseController;
 public class SelectTypeView extends JPanel implements ActionListener, PropertyChangeListener {
 
 // FORMAT THE BUTTONS AND LABELS HERE INTO SOMETHING THAT DOESNT LOOK LIKE TRASH PLEASE
@@ -27,6 +28,8 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
 
     private final SelectTypeViewModel selectTypeViewModel;
 
+    private final TruefalseController truefalseController;
+
 //private final SelectTypeController selectTypeController;
 
     private final ViewManagerModel viewManagerModel;
@@ -36,12 +39,13 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
     private Color background = new Color(57, 54, 70);
     private Color textColor = new Color(244, 238, 224);
 
-    public SelectTypeView(SelectTypeViewModel selectTypeViewModel, ViewManagerModel viewManagerModel ){
+    public SelectTypeView(SelectTypeViewModel selectTypeViewModel, ViewManagerModel viewManagerModel, TruefalseController truefalseController){
 
         //this.selectTypeController = selectTypeController;
         this.selectTypeViewModel = selectTypeViewModel;
         this.selectTypeViewModel.addPropertyChangeListener(this);
         this.viewManagerModel = viewManagerModel;
+        this.truefalseController = truefalseController;
 // Top label
         JLabel title = new JLabel("What type of game do you want to play?");
         title.setFont(new Font("Arial", Font.BOLD, 20));
@@ -80,6 +84,7 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
                     SelectTypeState selectTypeState = selectTypeViewModel.getState();
                     String totQ1 = selectTypeState.getTotalQ();
                     String user1 = selectTypeState.getUsername();
+                    truefalseController.execute(Integer.parseInt(totQ1), "easy", "Sports", "True / False");
 
                     System.out.println(totQ1 +" " +user1 + " Place Holder2");
 //ALSO ADD PART TO SET VALUE IN NEXT USECASE'S STATE
@@ -99,6 +104,7 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
                     SelectTypeState selectTypeState = selectTypeViewModel.getState();
                     String totQ2 = selectTypeState.getTotalQ();
                     String user2 = selectTypeState.getUsername();
+
 
                     System.out.println(totQ2 +" "+ user2+ " Place Holder1");
 
