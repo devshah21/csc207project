@@ -125,7 +125,7 @@ public class Main {
         views.add(loggedInView, loggedInView.viewName);
 
 
-        viewManagerModel.setActiveView(endGameView.viewName);
+        viewManagerModel.setActiveView(signupView.viewName);
         // viewManagerModel.setActiveView(endGameView.viewName);
         viewManagerModel.firePropertyChanged();
 
