@@ -47,7 +47,6 @@ public class CollectQuestionsPresenter implements CollectQuestionsOutputBoundary
 
         //Next Case
         this.viewManagerModel.setActiveView(selectTypeViewModel.getViewName());
-
         this.viewManagerModel.firePropertyChanged();
     }
 

@@ -6,14 +6,14 @@ public class TruefalseState {
 
     private String category = "9";
     private String type = "boolean";
-    private int questions = 10;
+    private String totalQ = "";
     private String difficulty = "easy";
 
     private String username = "";
 
     public TruefalseState(TruefalseState test) {
         username = test.username;
-        questions = test.questions;
+        totalQ = test.totalQ;
         difficulty = test.difficulty;
         type = test.type;
         category = test.category;
@@ -23,8 +23,20 @@ public class TruefalseState {
     }
 
 
-    public String getUsername1() {
+    public String getTotalQ() {
+        return totalQ;
+    }
+
+    public void setTotalQ(String totalQ) {
+        this.totalQ = totalQ;
+    }
+
+    public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getDifficulty() {
@@ -33,10 +45,6 @@ public class TruefalseState {
 
     public String getCategory() {
         return category;
-    }
-
-    public int getQuestions() {
-        return questions;
     }
 
     public String getType() { return type;}
