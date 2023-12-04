@@ -40,7 +40,7 @@ public class CollectQuestionsPresenter implements CollectQuestionsOutputBoundary
         selectTypeState.setUsername(totalQ.getUsername());
         selectTypeState.setTotalQ(totalQ.getTotalQ());
 
-        //System.out.println(selectTypeState.getTotalQ());
+
 
         this.selectTypeViewModel.setState(selectTypeState);
         this.selectTypeViewModel.firePropertyChanged();
@@ -55,7 +55,7 @@ public class CollectQuestionsPresenter implements CollectQuestionsOutputBoundary
     public void prepareFailView(String error) {
         // You failed, so try again
 
-        //System.out.println(error);
+        //(error);
         //JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
         // ADD POP UP WITH THIS INFO
 

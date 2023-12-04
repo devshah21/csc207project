@@ -26,7 +26,7 @@ import interface_adapter.signup.SignupPresenter;
 
 // Define the SignupView class, which is a Swing-based user interface.
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "sign up";
+    public static final String viewName = "sign up";
 
     private final SignupViewModel signupViewModel;
     private final JTextField usernameInputField = new JTextField(15);

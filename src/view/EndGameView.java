@@ -206,7 +206,7 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
                        }
                           userOutputLBTF.setText(leadTf);
                           userOutputLBMCQ.setText(leadMul);
-                          userOutput.setText(output);
+                          userScore.setText(output);
 
                           CollectQuestionsState collectQuestionsState = collectQuestionsViewModel.getState();
                           collectQuestionsState.setUsername(high[0]);
@@ -227,7 +227,7 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
                        CollectQuestionsState collectQuestionsState = collectQuestionsViewModel.getState();
                        collectQuestionsViewModel.setState(collectQuestionsState);
                        collectQuestionsViewModel.firePropertyChanged();
-
+                       replay.setVisible(false);
                        // Change the view
                        viewManagerModel.setActiveView(collectQuestionsViewModel.getViewName());
                        viewManagerModel.firePropertyChanged();
@@ -240,7 +240,7 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
       exit.addActionListener(                // Returns to signup
               evt -> {
                  if (evt.getSource().equals(exit)) {
-
+                     replay.setVisible(false);
                     viewManagerModel.setActiveView(signupViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
 

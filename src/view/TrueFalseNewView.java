@@ -24,6 +24,8 @@ public class TrueFalseNewView extends JPanel implements ActionListener, Property
     public final String falseBut = "False";
     public static final String viewName = "TrueFalseNew";
 
+    private Color background = new Color(57,54,70);
+    private Color textColor = new Color(244, 238, 224);
 
     private final TrueFalseControllerNew trueFalseControllerNew;
 
@@ -37,9 +39,11 @@ public class TrueFalseNewView extends JPanel implements ActionListener, Property
 
     private final JLabel falseErrorField = new JLabel();
 
+
+
     public TrueFalseNewView(TrueFalseViewModelNew trueFalseViewModelNew, TrueFalseControllerNew controller) {
-
-
+        this.setLayout(null);
+        this.setBackground(background);
         this.trueFalseViewModelNew = trueFalseViewModelNew;
         this.trueFalseControllerNew = controller;
         this.trueFalseViewModelNew.addPropertyChangeListener(this);
@@ -51,15 +55,18 @@ public class TrueFalseNewView extends JPanel implements ActionListener, Property
         String qAsked = trueFalseStateNew.getQuestionAsked();
 
         JLabel questionA = new JLabel(qAsked);
-        questionA.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JPanel buttons = new JPanel();
+        questionA.setAlignmentX(Component.LEFT_ALIGNMENT);
+        questionA.setForeground(textColor);
+        questionA.setFont(new Font("Arial",Font.BOLD,15));
         trueB = new JButton(trueFalseViewModelNew.TRUEN_BUTTON_LABEL);
-        buttons.add(trueB);
+
 
         falseB = new JButton(trueFalseViewModelNew.FALSEN_BUTTON_LABEL);
-        buttons.add(falseB);
 
+
+        JLabel temp = new JLabel("Please hit any button to start!");
+        temp.setForeground(textColor);
+        temp.setFont(new Font("Arial",Font.BOLD,20));
 
         // AS SEEN IN LECTURE THIS WILL INVOKE OUR CONTROLLER
         // To invoke our controller
@@ -67,7 +74,7 @@ public class TrueFalseNewView extends JPanel implements ActionListener, Property
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(trueB)) {
-
+                            temp.setVisible(false);
                             String tAns = "true";
 
                             TrueFalseStateNew trueFalseStateNew = trueFalseViewModelNew.getState();
@@ -99,7 +106,7 @@ public class TrueFalseNewView extends JPanel implements ActionListener, Property
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(falseB)) {
-
+                            temp.setVisible(false);
                             String fAns = "false";
 
                             TrueFalseStateNew trueFalseStateNew = trueFalseViewModelNew.getState();
@@ -126,12 +133,19 @@ public class TrueFalseNewView extends JPanel implements ActionListener, Property
                 }
         );
 
+
+        trueB.setBounds(300,300,200,50);
+        falseB.setBounds(525,300,200,50);
+        questionA.setBounds(364,100,800,100);
+        temp.setBounds(364,100,500,100);
+
         // Set up GUI
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(questionA);
         this.add(trueErrorField);
         this.add(falseErrorField);
-        this.add(buttons);
+        this.add(trueB);
+        this.add(falseB);
+        this.add(temp);
 
 
 
@@ -141,7 +155,6 @@ public class TrueFalseNewView extends JPanel implements ActionListener, Property
     @Override
     public void actionPerformed(ActionEvent evt) {
 
-        System.out.println("Click " + evt.getActionCommand());
 
 
     }
