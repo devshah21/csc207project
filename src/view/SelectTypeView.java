@@ -1,5 +1,7 @@
 package view;
 
+import interface_adapter.TrueFalseNew.TrueFalseStateNew;
+import interface_adapter.TrueFalseNew.TrueFalseViewModelNew;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.select_type.SelectTypeViewModel;
 
@@ -31,17 +33,20 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
 
     private final ViewManagerModel viewManagerModel;
 
+    private final TrueFalseViewModelNew trueFalseViewModelNew;
+
     private final JLabel selectTypeErrorField = new JLabel();
 
     private Color background = new Color(57, 54, 70);
     private Color textColor = new Color(244, 238, 224);
 
-    public SelectTypeView(SelectTypeViewModel selectTypeViewModel, ViewManagerModel viewManagerModel ){
+    public SelectTypeView(SelectTypeViewModel selectTypeViewModel,TrueFalseViewModelNew trueFalseViewModelNew, ViewManagerModel viewManagerModel ){
 
         //this.selectTypeController = selectTypeController;
         this.selectTypeViewModel = selectTypeViewModel;
         this.selectTypeViewModel.addPropertyChangeListener(this);
         this.viewManagerModel = viewManagerModel;
+        this.trueFalseViewModelNew = trueFalseViewModelNew;
 // Top label
         JLabel title = new JLabel("What type of game do you want to play?");
         title.setFont(new Font("Arial", Font.BOLD, 20));
@@ -81,7 +86,7 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
                     String totQ1 = selectTypeState.getTotalQ();
                     String user1 = selectTypeState.getUsername();
 
-                    System.out.println(totQ1 +" " +user1 + " Place Holder2");
+                    //System.out.println(totQ1 +" " +user1 + " Place Holder2");
 //ALSO ADD PART TO SET VALUE IN NEXT USECASE'S STATE
 
                     // ADD THE NEXT VIEW MODEL HERE
@@ -100,7 +105,18 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
                     String totQ2 = selectTypeState.getTotalQ();
                     String user2 = selectTypeState.getUsername();
 
-                    System.out.println(totQ2 +" "+ user2+ " Place Holder1");
+                    //System.out.println(totQ2 +" "+ user2+ " Place Holder1");
+
+                    TrueFalseStateNew trueFalseStateNew = trueFalseViewModelNew.getState();
+                    trueFalseStateNew.setTotalQ(totQ2);
+                    trueFalseStateNew.setUsername(user2);
+
+                    trueFalseViewModelNew.setState(trueFalseStateNew);
+                    trueFalseViewModelNew.firePropertyChanged();
+
+                    //Next Case
+                    viewManagerModel.setActiveView(trueFalseViewModelNew.getViewName());
+                    viewManagerModel.firePropertyChanged();
 
 
 

@@ -69,7 +69,7 @@ public class LeaderBoardDataAccessObject {
             currLine = fr.readLine();
             oldLines = oldLines + currLine + System.lineSeparator(); //Adds it to what we might need to write back
             currLine = fr.readLine(); //Reads first line
-            System.out.println(currLine);
+            //System.out.println(currLine);
 
 
             while(currLine != null){
@@ -91,17 +91,17 @@ public class LeaderBoardDataAccessObject {
 
                         //Check if this was final line to add
                         if(nextLine == null){
-                            System.out.println("hi2");
+                            //System.out.println("hi2");
                             newLeader = username +","+ String.valueOf(score) +","+ numQuestions +","+ gameType +","+ questionType;
                             oldLines = oldLines.replaceAll(oldLeader, newLeader); // Now the new line has taken its place
 
 
                         }
                         else{
-                            System.out.println("hi1");
+                            //System.out.println("hi1");
                             newLeader = username +","+ String.valueOf(score) +","+ numQuestions +","+ gameType +","+ questionType;
                             oldLines = oldLines.replaceAll(oldLeader, newLeader); // Now the new line has taken its place
-                            System.out.println(newLeader);
+                            //System.out.println(newLeader);
                         }
 
 
@@ -164,7 +164,7 @@ public class LeaderBoardDataAccessObject {
                     tfQDone = tfQDone + 1;
 
                     if (!firstOne && gameType.equals("trueOrFalse")){
-                        System.out.println("incorrect");
+                        //System.out.println("incorrect");
                         trueOrFalseLeaders = trueOrFalseLeaders + tfQDone + ". " + username + ": "+ score + " : " + "In " + numQuestions
                                 + " questions: " + questionType + "\n";
 
@@ -184,7 +184,7 @@ public class LeaderBoardDataAccessObject {
                 while (mulQDone != 10){
                     mulQDone = mulQDone + 1;
                     if (!firstOne && !gameType.equals("trueOrFalse")){
-                        System.out.println("correct");
+                        //System.out.println("correct");
                         mulChoiceLeaders = mulChoiceLeaders + mulQDone + ". " + username + ": "+ score + " : " + "In " + numQuestions
                                 + " questions: " + questionType + "\n";
 
@@ -206,6 +206,10 @@ public class LeaderBoardDataAccessObject {
 
             fr.close();
             wr.close();
+
+            //System.out.println(trueOrFalseLeaders);
+            //System.out.println(mulChoiceLeaders);
+
             String[] output = {trueOrFalseLeaders, mulChoiceLeaders };
             return output ;
 
