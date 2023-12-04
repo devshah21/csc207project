@@ -1,6 +1,7 @@
 package app;
 
 import data_access.FileUserDataAccessObject;
+import entity.APIException;
 import data_access.LeaderBoardDataAccessObject;
 import data_access.SaveScoreDataAccessObject;
 import entity.CommonUserFactory;
@@ -11,8 +12,16 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.select_type.SelectTypeViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.truefalse.TruefalseViewModel;
 import use_case.login.LoginUserDataAccessInterface;
+
+import view.LoggedInView;
+import view.LoginView;
+import view.SignupView;
+import view.ViewManager;
+import view.TruefalseView;
 import view.*;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +29,7 @@ import java.io.IOException;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws APIException, IOException, InterruptedException {
         // Build the main program window, the main panel containing the
         // various cards, and the layout, and stitch them together.
 
@@ -45,6 +54,7 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
+        TruefalseViewModel truefalseViewModel = new TruefalseViewModel();
 
         // New View_Model here:
         CollectQuestionsViewModel collectQuestionsViewModel = new CollectQuestionsViewModel();
@@ -58,6 +68,9 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        TruefalseView truefalseView = new TruefalseView(truefalseViewModel, viewManagerModel);
+        views.add(truefalseView, truefalseView.viewName);
 
         // New DAO being set up
         LeaderBoardDataAccessObject leaderBoardDataAccessObject;
@@ -88,6 +101,7 @@ public class Main {
         views.add(endGameView, endGameView.viewName);
         /////////////////////////////////////////////////////
 
+
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
@@ -97,6 +111,8 @@ public class Main {
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
+
+        viewManagerModel.setActiveView(truefalseView.viewName);
         viewManagerModel.setActiveView(endGameView.viewName);
         viewManagerModel.firePropertyChanged();
 

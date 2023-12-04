@@ -22,7 +22,7 @@ public class TruefalseInteractor implements TruefalseInputBoundary {
     }
 
     @Override
-    public void apply(TruefalseInputData inputData) {
+    public void execute(TruefalseInputData inputData) {
         try {
             // Hardset the values for the API call
             QuizAPI quizAPI = new QuizAPI(10, "easy", "boolean", "9");
