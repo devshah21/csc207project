@@ -1,4 +1,4 @@
-package Interface_adapter_test.CollectQuestions;
+package interface_adapters.Collect_Questions;
 
 import interface_adapter.Collect_Questions.CollectQuestionsController;
 import interface_adapter.Collect_Questions.CollectQuestionsPresenter;

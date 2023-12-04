@@ -1,4 +1,4 @@
-package Interface_adapter_test.CollectQuestions;
+package interface_adapters.Collect_Questions;
 
 
 import app.CollectQuestionsCaseFactory;
