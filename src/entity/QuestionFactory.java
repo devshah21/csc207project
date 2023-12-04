@@ -1,8 +1,9 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class QuestionFactory implements Question{
+public class QuestionFactory implements Question, Iterable<String>{
     private final String category;
     private final String type;
     private final String difficulty;
@@ -40,6 +41,19 @@ public class QuestionFactory implements Question{
     }
 
     public ArrayList<String> getWrongAnswers() {
-        return (ArrayList<String>) wrongAnswers.clone();
+        return new ArrayList<>(wrongAnswers);
     }
+
+
+    @Override
+    public Iterator<String> iterator() { // iterator loops through all wrong answers
+        // Create a list that includes the right answer and wrong answers
+        ArrayList<String> allAnswers = new ArrayList<>();
+        allAnswers.addAll(wrongAnswers);
+
+        // Return an iterator for the combined list
+        return allAnswers.iterator();
+    }
+
+
 }

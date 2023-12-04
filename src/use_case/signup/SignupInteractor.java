@@ -33,12 +33,12 @@ public class SignupInteractor implements SignupInputBoundary {
         }
         // If both conditions are satisfied, create a new user and save it.
         else {
-            LocalDateTime now = LocalDateTime.now();
-            User user = userFactory.create(signupInputData.getUsername(), signupInputData.getPassword(), now);
+
+            User user = userFactory.create(signupInputData.getUsername(), signupInputData.getPassword(), 0);
             userDataAccessObject.save(user);
 
             // Create a SignupOutputData object and notify the presenter of success.
-            SignupOutputData signupOutputData = new SignupOutputData(user.getName(), now.toString(), false);
+            SignupOutputData signupOutputData = new SignupOutputData(user.getName(), 0, false);
             userPresenter.successView(signupOutputData);
         }
     }

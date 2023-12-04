@@ -1,6 +1,5 @@
 package entity;
 
-import java.time.LocalDateTime;
 
 public interface User {
 
@@ -8,5 +7,4 @@ public interface User {
 
     String getPassword();
 
-    LocalDateTime getCreationTime();
 }

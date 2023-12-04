@@ -2,22 +2,31 @@ package app;
 
 import data_access.FileUserDataAccessObject;
 import entity.APIException;
+import data_access.LeaderBoardDataAccessObject;
+import data_access.SaveScoreDataAccessObject;
 import entity.CommonUserFactory;
+import interface_adapter.Collect_Questions.CollectQuestionsViewModel;
+import interface_adapter.end_game.EndGameViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.select_type.SelectTypeViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.truefalse.TruefalseViewModel;
 import use_case.login.LoginUserDataAccessInterface;
+
 import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
 import view.ViewManager;
 import view.TruefalseView;
+import view.*;
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+
 
 public class Main {
     public static void main(String[] args) throws APIException, IOException, InterruptedException {
@@ -47,6 +56,12 @@ public class Main {
         SignupViewModel signupViewModel = new SignupViewModel();
         TruefalseViewModel truefalseViewModel = new TruefalseViewModel();
 
+        // New View_Model here:
+        CollectQuestionsViewModel collectQuestionsViewModel = new CollectQuestionsViewModel();
+        SelectTypeViewModel selectTypeViewModel = new SelectTypeViewModel();
+
+        EndGameViewModel endGameViewModel = new EndGameViewModel();
+
         FileUserDataAccessObject userDataAccessObject;
         try {
             userDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
@@ -57,16 +72,48 @@ public class Main {
         TruefalseView truefalseView = new TruefalseView(truefalseViewModel, viewManagerModel);
         views.add(truefalseView, truefalseView.viewName);
 
+        // New DAO being set up
+        LeaderBoardDataAccessObject leaderBoardDataAccessObject;
+
+        leaderBoardDataAccessObject = new LeaderBoardDataAccessObject("./leaderboard.csv");
+
+        // Initialize the SaveScoreDAO and LeaderBoardDAO for work (add to factory and send to your interactor if you want to use it)\
+        // Also implement a interface for both of these
+        SaveScoreDataAccessObject saveScoreDataAccessObject;
+        try {
+                saveScoreDataAccessObject= new SaveScoreDataAccessObject("src/users.csv");
+
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
+        // New Stuff
+
+        CollectQuestionsView collectQuestionsView = CollectQuestionsCaseFactory.create(viewManagerModel, collectQuestionsViewModel, selectTypeViewModel );
+        views.add(collectQuestionsView, collectQuestionsView.viewName);
+
+        // WILL NEED TO BE CHANGED INTO A FACTORY WHEN THE 1/2 OUTPUT VIEWS FROM THE BUTTONS ARE READY
+        SelectTypeView selectTypeView = new SelectTypeView(selectTypeViewModel, viewManagerModel);
+        views.add(selectTypeView, selectTypeView.viewName);
+
+        // This can either kick you out to signup or loop you back to start, or move you to leaderboard(may be added later)
+        //EndGameView endGameView = EndGameCaseFactory.create(viewManagerModel, endGameViewModel, collectQuestionsViewModel, signupViewModel);
+        EndGameView endGameView = new EndGameView(endGameViewModel,signupViewModel, collectQuestionsViewModel, viewManagerModel);
+        views.add(endGameView, endGameView.viewName);
+        /////////////////////////////////////////////////////
+
+
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, collectQuestionsViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
+
         viewManagerModel.setActiveView(truefalseView.viewName);
+        viewManagerModel.setActiveView(endGameView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.setPreferredSize(new Dimension(1024,800));
