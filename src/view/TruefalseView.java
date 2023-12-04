@@ -38,6 +38,8 @@ public class TruefalseView extends JPanel implements ActionListener, PropertyCha
 
     private final JButton trueFalseB;
 
+    private int counter = 0;
+
     private final JButton mulChoiceB;
 
     private final TruefalseViewModel truefalseViewModel;
@@ -47,14 +49,13 @@ public class TruefalseView extends JPanel implements ActionListener, PropertyCha
     private final JLabel selectTypeErrorField = new JLabel();
 
     public TruefalseView(TruefalseViewModel truefalseViewModel, ViewManagerModel viewManagerModel ) throws APIException, IOException, InterruptedException {
-
         //this.selectTypeController = selectTypeController;
         this.truefalseViewModel = truefalseViewModel;
         this.truefalseViewModel.addPropertyChangeListener(this);
         this.viewManagerModel = viewManagerModel;
         // Top label
         JLabel title;
-        title = new JLabel(questions.get(0).getQuestion());
+        title = new JLabel(questions.get(counter).getQuestion());
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Button setups
@@ -67,14 +68,35 @@ public class TruefalseView extends JPanel implements ActionListener, PropertyCha
 
         // Controller calls
 
+        // Define a JLabel for the result message
+        JLabel resultLabel = new JLabel();
+        this.add(resultLabel);
+
         mulChoiceB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(mulChoiceB)) {
-
-                    // This should keep our latest one from collectQuestionsPresenter
-
-                    TruefalseState truefalseState = truefalseViewModel.getState();
+                    // Check if there are more questions
+                    if (counter < questions.size() - 1) {
+                        // Check if the user's answer is correct
+                        if (questions.get(counter).getRightAnswer().equals("True")) {
+                            resultLabel.setText("CORRECT");
+                        } else {
+                            resultLabel.setText("INCORRECT");
+                        }
+                        counter += 1;
+                        // Update the text of the existing label
+                        title.setText(questions.get(counter).getQuestion());
+                    } else {
+                        // Handle the end of the questions list
+                        title.setText("No more questions.");
+                        // Remove the buttons
+                        buttons.remove(mulChoiceB);
+                        buttons.remove(trueFalseB);
+                        // Redraw the panel
+                        buttons.revalidate();
+                        buttons.repaint();
+                    }
                 }
             }
         });
@@ -83,11 +105,31 @@ public class TruefalseView extends JPanel implements ActionListener, PropertyCha
             @Override
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(trueFalseB)) {
-
-                    TruefalseState truefalseState = truefalseViewModel.getState();
+                    // Check if there are more questions
+                    if (counter < questions.size() - 1) {
+                        // Check if the user's answer is correct
+                        if (questions.get(counter).getRightAnswer().equals("False")) {
+                            resultLabel.setText("CORRECT");
+                        } else {
+                            resultLabel.setText("INCORRECT");
+                        }
+                        counter += 1;
+                        // Update the text of the existing label
+                        title.setText(questions.get(counter).getQuestion());
+                    } else {
+                        // Handle the end of the questions list
+                        title.setText("No more questions.");
+                        // Remove the buttons
+                        buttons.remove(mulChoiceB);
+                        buttons.remove(trueFalseB);
+                        // Redraw the panel
+                        buttons.revalidate();
+                        buttons.repaint();
+                    }
                 }
             }
         });
+
 
         // THIS WILL FORM THE BASIC DUMMY GUI
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
