@@ -113,7 +113,7 @@ public class Main {
 
 
         viewManagerModel.setActiveView(truefalseView.viewName);
-        viewManagerModel.setActiveView(endGameView.viewName);
+        // viewManagerModel.setActiveView(endGameView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.setPreferredSize(new Dimension(1024,800));
