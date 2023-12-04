@@ -7,6 +7,7 @@ import java.beans.PropertyChangeSupport;
 
 public class EndGameViewModel extends ViewModel {
 
+    public static final String RESULTS_LABEL = "Results";
     public static final String REPLAY_BUTTON_LABEL = "New Game";
     public static final String EXIT_BUTTON_LABEL = "Exit";
     public static final String USER_RESULT_LABEL = "Your Score";

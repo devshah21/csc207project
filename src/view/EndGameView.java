@@ -1,7 +1,12 @@
 package view;
 
+import data_access.InformationStorageDAO;
+import data_access.LeaderBoardDataAccessObject;
+import data_access.SaveScoreDataAccessObject;
 import interface_adapter.Collect_Questions.CollectQuestionsState;
 import interface_adapter.Collect_Questions.CollectQuestionsViewModel;
+import interface_adapter.TrueFalseNew.TrueFalseStateNew;
+import interface_adapter.TrueFalseNew.TrueFalseViewModelNew;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.end_game.EndGameState;
 import interface_adapter.end_game.EndGameViewModel;
@@ -17,6 +22,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
 public class EndGameView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -29,6 +35,8 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
    private final JButton replay;
 
    private final JButton exit;
+
+   private final JButton results;
 
 
    // Only button with use case linked to this
@@ -46,14 +54,20 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
 
    private JLabel userScore;
 
+   private String username;
+
+
    public EndGameView(EndGameViewModel endGameViewModel, SignupViewModel signupViewModel,
-                      CollectQuestionsViewModel collectQuestionsViewModel, ViewManagerModel viewManagerModel){
+                      CollectQuestionsViewModel collectQuestionsViewModel, ViewManagerModel viewManagerModel,
+                      InformationStorageDAO informationStorageDAO, LeaderBoardDataAccessObject leaderBoardDataAccessObject, SaveScoreDataAccessObject saveScoreDataAccessObject) throws IOException {
+
 
       this.setLayout(null);
       this.setBackground(background);
       //this.endGameController = controller;
       this.endGameViewModel = endGameViewModel;
       this.endGameViewModel.addPropertyChangeListener(this);
+      this.username = "";
 
       JLabel title = new JLabel(EndGameViewModel.TITLE);
       title.setFont(new Font("Arial",Font.BOLD,27));
@@ -66,6 +80,18 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
       String output = endGameState.getOutput();
       String leaderBoardTF = endGameState.getLBTF();
       String leaderBoardMul = endGameState.getLBMul();
+
+
+      //String[] leader = informationStorageDAO.getLeaderValues();
+      //String[] high = informationStorageDAO.getHighScoreValues();
+
+      //System.out.println(leader[0]);
+      //System.out.println(high[0]);
+      //System.out.println(leader[0]);
+      //System.out.println(leader[1]);
+      //System.out.println(leader[2]);
+      //System.out.println(leader[3]);
+      //System.out.println(leader[4]);
 
       //leaderBoardTF = "1. Kobe: 11 : In 7 questions: Lebron James"; // EXAMPLE DISPLAY FOR LEADER BOARD
       // If user wants to play again
@@ -105,7 +131,7 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
       userOutputLBMCQ = new JTextArea(leaderBoardMul);
       userOutputLBMCQ.setForeground(textColor);
       userOutputLBMCQ.setBackground(new Color(57, 55, 64));
-      userOutputLBMCQ.setFont(new Font("Arial",Font.PLAIN, 12));
+      userOutputLBMCQ.setFont(new Font("Arial",Font.PLAIN, 15));
       userOutputLBMCQ.setAlignmentX(Component.LEFT_ALIGNMENT);
       userOutputLBMCQ.setBorder(blackLine);
       //Set MCQ Label
@@ -117,7 +143,7 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
       userOutputLBTF = new JTextArea(leaderBoardTF); //TODO: MAKE SURE YOU CHANGE THIS
       userOutputLBTF.setForeground(textColor);
       userOutputLBTF.setBackground(new Color(57, 55, 64));
-      userOutputLBTF.setFont(new Font("Arial",Font.PLAIN, 12));
+      userOutputLBTF.setFont(new Font("Arial",Font.PLAIN, 15));
       userOutputLBTF.setAlignmentX(Component.LEFT_ALIGNMENT);
       userOutputLBTF.setBorder(blackLine);
 
@@ -130,8 +156,67 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
       replay = new JButton(EndGameViewModel.REPLAY_BUTTON_LABEL);
       exit = new JButton(EndGameViewModel.EXIT_BUTTON_LABEL);
 
+      results = new JButton(EndGameViewModel.RESULTS_LABEL);
+
+
+      results.setFont(new Font("Arial",Font.BOLD, 20));
       replay.setFont(new Font("Arial",Font.BOLD, 20));
       exit.setFont(new Font("Arial",Font.BOLD, 20));
+
+
+      results.addActionListener(                // Starts the game again
+              new ActionListener() {
+                 public void actionPerformed(ActionEvent evt) {
+                    if (evt.getSource().equals(results)) {
+                       String[] leader;
+                       String[] high;
+
+                       try {
+                           leader = informationStorageDAO.getLeaderValues();
+                       } catch (IOException e) {
+                          throw new RuntimeException(e);
+                       }
+                       try {
+                           high = informationStorageDAO.getHighScoreValues();
+                       } catch (IOException e) {
+                          throw new RuntimeException(e);
+                       }
+
+                       String [] outs = leaderBoardDataAccessObject.generateLeaderBoards(leader[0],Integer.parseInt(leader[1]), leader[2], leader[3], leader[4]);
+
+                       String leadTf = outs[0];
+                       String leadMul = outs[1];
+
+                       Boolean outSave = null;
+                       try {
+                          outSave = saveScoreDataAccessObject.CheckIfHighScore(Integer.parseInt(high[1]), high[0]);
+                       } catch (IOException e) {
+                          throw new RuntimeException(e);
+                       }
+
+                       String output;
+                       if(outSave == true){
+
+                          output = "HighScore! " + high[1];
+
+                       }
+                       else {
+
+                          output = high[1];
+                       }
+                          userOutputLBTF.setText(leadTf);
+                          userOutputLBMCQ.setText(leadMul);
+                          userOutput.setText(output);
+
+                          CollectQuestionsState collectQuestionsState = collectQuestionsViewModel.getState();
+                          collectQuestionsState.setUsername(high[0]);
+                          replay.setVisible(true); //Only after we grab username can we go back
+
+                       }
+                    }
+              }
+      );
+
 
       replay.addActionListener(                // Starts the game again
               new ActionListener() {
@@ -140,7 +225,6 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
 
                        // Give username to collectQuestions
                        CollectQuestionsState collectQuestionsState = collectQuestionsViewModel.getState();
-                       collectQuestionsState.setUsername(username);
                        collectQuestionsViewModel.setState(collectQuestionsState);
                        collectQuestionsViewModel.firePropertyChanged();
 
@@ -168,6 +252,7 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
       title.setBounds(450,0,200,100);
       exit.setBounds(565,600,200,100);
       replay.setBounds(565,490,200,100);
+      results.setBounds(770,490,200,100);
       userOutputLBMCQ.setBounds(35,170,400,300);
       userOutputLBTF.setBounds(455,170,400,300);
       MCQLabel.setBounds(35, 45,500,200);
@@ -181,6 +266,8 @@ public class EndGameView extends JPanel implements ActionListener, PropertyChang
       this.add(userOutputLBMCQ);
       this.add(exit);
       this.add(replay);
+      replay.setVisible(false);
+      this.add(results);
       this.add(MCQLabel);
       this.add(TFLabel);
       this.add(userOutputLBTF);
