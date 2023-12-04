@@ -113,6 +113,12 @@ public class CollectQuestionsView extends JPanel implements ActionListener, Prop
     public void propertyChange(PropertyChangeEvent evt) {
         CollectQuestionsState state = (CollectQuestionsState) evt.getNewValue();
         setFields(state);
+
+        if (state.getTotalQError() != null) {
+            JOptionPane.showMessageDialog(null, state.getTotalQError(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        state.resetTotalQError();
     }
 
     private void setFields(CollectQuestionsState state) {

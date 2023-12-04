@@ -101,6 +101,9 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
                     String user2 = selectTypeState.getUsername();
 
                     System.out.println(totQ2 +" "+ user2+ " Place Holder1");
+
+
+
 //ALSO ADD PART TO SET VALUE IN NEXT USECASE'S STATE
 
                     // ADD THE NEXT VIEW MODEL HERE

@@ -21,4 +21,6 @@ public class CollectQuestionsOutputData {
         return username;
     }
 
+    public boolean getDidUseCaseFail(){return didUseCaseFailed;}
+
 }
