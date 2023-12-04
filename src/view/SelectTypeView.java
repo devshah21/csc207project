@@ -105,7 +105,6 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
                     String totQ2 = selectTypeState.getTotalQ();
                     String user2 = selectTypeState.getUsername();
 
-                    System.out.println(totQ2 +" "+ user2+ " Place Holder1");
 
                     TruefalseState truefalseState = truefalseViewModel.getState();
                     truefalseState.setUsername(user2);

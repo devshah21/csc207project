@@ -58,12 +58,9 @@ public class TruefalseView extends JPanel implements ActionListener, PropertyCha
         System.out.println(balls);
 
 
-
         QuizAPI quizAPI = new QuizAPI(balls, "easy", "boolean", "9");
 
         ArrayList<Question> questions = quizAPI.getQuestions();
-
-        System.out.println("PEWPEWPEWPPWPEW123456789765432");
 
 
         // Top label
