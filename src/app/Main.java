@@ -50,6 +50,7 @@ public class Main {
 
         EndGameViewModel endGameViewModel = new EndGameViewModel();
 
+
         FileUserDataAccessObject userDataAccessObject;
         try {
             userDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
@@ -65,6 +66,9 @@ public class Main {
         // WILL NEED TO BE CHANGED INTO A FACTORY WHEN THE 1/2 OUTPUT VIEWS FROM THE BUTTONS ARE READY
         SelectTypeView selectTypeView = new SelectTypeView(selectTypeViewModel, viewManagerModel);
         views.add(selectTypeView, selectTypeView.viewName);
+
+
+
 
         // This can either kick you out to signup or loop you back to start, or move you to leaderboard(may be added later)
         //EndGameView endGameView = EndGameCaseFactory.create(viewManagerModel, endGameViewModel, collectQuestionsViewModel, signupViewModel);
