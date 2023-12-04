@@ -1,7 +1,5 @@
 package view;
 
-import interface_adapter.TrueFalseNew.TrueFalseStateNew;
-import interface_adapter.TrueFalseNew.TrueFalseViewModelNew;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.select_type.SelectTypeViewModel;
 
@@ -12,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import interface_adapter.select_type.SelectTypeState;
+import interface_adapter.truefalse.TruefalseController;
 public class SelectTypeView extends JPanel implements ActionListener, PropertyChangeListener {
 
 // FORMAT THE BUTTONS AND LABELS HERE INTO SOMETHING THAT DOESNT LOOK LIKE TRASH PLEASE
@@ -29,24 +28,24 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
 
     private final SelectTypeViewModel selectTypeViewModel;
 
+    private final TruefalseController truefalseController;
+
 //private final SelectTypeController selectTypeController;
 
     private final ViewManagerModel viewManagerModel;
-
-    private final TrueFalseViewModelNew trueFalseViewModelNew;
 
     private final JLabel selectTypeErrorField = new JLabel();
 
     private Color background = new Color(57, 54, 70);
     private Color textColor = new Color(244, 238, 224);
 
-    public SelectTypeView(SelectTypeViewModel selectTypeViewModel,TrueFalseViewModelNew trueFalseViewModelNew, ViewManagerModel viewManagerModel ){
+    public SelectTypeView(SelectTypeViewModel selectTypeViewModel, ViewManagerModel viewManagerModel, TruefalseController truefalseController){
 
         //this.selectTypeController = selectTypeController;
         this.selectTypeViewModel = selectTypeViewModel;
         this.selectTypeViewModel.addPropertyChangeListener(this);
         this.viewManagerModel = viewManagerModel;
-        this.trueFalseViewModelNew = trueFalseViewModelNew;
+        this.truefalseController = truefalseController;
 // Top label
         JLabel title = new JLabel("What type of game do you want to play?");
         title.setFont(new Font("Arial", Font.BOLD, 20));
@@ -85,8 +84,9 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
                     SelectTypeState selectTypeState = selectTypeViewModel.getState();
                     String totQ1 = selectTypeState.getTotalQ();
                     String user1 = selectTypeState.getUsername();
+                    truefalseController.execute(Integer.parseInt(totQ1), "easy", "Sports", "True / False");
 
-                    //System.out.println(totQ1 +" " +user1 + " Place Holder2");
+                    System.out.println(totQ1 +" " +user1 + " Place Holder2");
 //ALSO ADD PART TO SET VALUE IN NEXT USECASE'S STATE
 
                     // ADD THE NEXT VIEW MODEL HERE
@@ -105,18 +105,8 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
                     String totQ2 = selectTypeState.getTotalQ();
                     String user2 = selectTypeState.getUsername();
 
-                    //System.out.println(totQ2 +" "+ user2+ " Place Holder1");
 
-                    TrueFalseStateNew trueFalseStateNew = trueFalseViewModelNew.getState();
-                    trueFalseStateNew.setTotalQ(totQ2);
-                    trueFalseStateNew.setUsername(user2);
-
-                    trueFalseViewModelNew.setState(trueFalseStateNew);
-                    trueFalseViewModelNew.firePropertyChanged();
-
-                    //Next Case
-                    viewManagerModel.setActiveView(trueFalseViewModelNew.getViewName());
-                    viewManagerModel.firePropertyChanged();
+                    System.out.println(totQ2 +" "+ user2+ " Place Holder1");
 
 
 
