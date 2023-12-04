@@ -10,6 +10,9 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import interface_adapter.select_type.SelectTypeState;
+import interface_adapter.truefalse.TruefalseState;
+import interface_adapter.truefalse.TruefalseViewModel;
+
 public class SelectTypeView extends JPanel implements ActionListener, PropertyChangeListener {
 
 // FORMAT THE BUTTONS AND LABELS HERE INTO SOMETHING THAT DOESNT LOOK LIKE TRASH PLEASE
@@ -30,15 +33,17 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
 //private final SelectTypeController selectTypeController;
 
     private final ViewManagerModel viewManagerModel;
+    private final TruefalseViewModel truefalseViewModel;
 
     private final JLabel selectTypeErrorField = new JLabel();
 
     private Color background = new Color(57, 54, 70);
     private Color textColor = new Color(244, 238, 224);
 
-    public SelectTypeView(SelectTypeViewModel selectTypeViewModel, ViewManagerModel viewManagerModel ){
+    public SelectTypeView(SelectTypeViewModel selectTypeViewModel, ViewManagerModel viewManagerModel, TruefalseViewModel truefalseViewModel){
 
         //this.selectTypeController = selectTypeController;
+        this.truefalseViewModel = truefalseViewModel;
         this.selectTypeViewModel = selectTypeViewModel;
         this.selectTypeViewModel.addPropertyChangeListener(this);
         this.viewManagerModel = viewManagerModel;
@@ -101,6 +106,21 @@ public class SelectTypeView extends JPanel implements ActionListener, PropertyCh
                     String user2 = selectTypeState.getUsername();
 
                     System.out.println(totQ2 +" "+ user2+ " Place Holder1");
+
+                    TruefalseState truefalseState = truefalseViewModel.getState();
+                    truefalseState.setUsername(user2);
+
+                    truefalseState.setQuestions(Integer.parseInt(totQ2));
+
+                    int x = truefalseState.getQuestions();
+
+                    System.out.println(x);
+
+                    truefalseViewModel.setState(truefalseState);
+                    truefalseViewModel.firePropertyChanged();
+
+                    viewManagerModel.setActiveView(truefalseViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
 //ALSO ADD PART TO SET VALUE IN NEXT USECASE'S STATE
 
                     // ADD THE NEXT VIEW MODEL HERE

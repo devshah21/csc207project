@@ -1,12 +1,10 @@
 package interface_adapter.truefalse;
 
-import interface_adapter.signup.SignupState;
-
 public class TruefalseState {
 
     private String category = "9";
     private String type = "boolean";
-    private int questions = 10;
+    private int questions=2;
     private String difficulty = "easy";
 
     private String username = "";
@@ -40,6 +38,11 @@ public class TruefalseState {
     }
 
     public String getType() { return type;}
+
+
+    public void setQuestions(int questions) { this.questions = questions; }
+
+    public void setUsername(String username) {this.username = username; }
 
 
 }

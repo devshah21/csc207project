@@ -13,7 +13,7 @@ public class TruefalseViewModel extends ViewModel {
 
     private TruefalseState state = new TruefalseState();
 
-    public TruefalseViewModel(){super("What type");}
+    public TruefalseViewModel(){super("TRUEFALSE");}
 
     public void setState(TruefalseState state) { this.state = state; }
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);

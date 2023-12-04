@@ -23,10 +23,7 @@ public class TruefalseView extends JPanel implements ActionListener, PropertyCha
 
     // FORMAT THE BUTTONS AND LABELS HERE INTO SOMETHING THAT DOESNT LOOK LIKE TRASH PLEASE
 
-    public TruefalseState tfstate;
 
-    QuizAPI quizAPI = new QuizAPI(10, "easy", "boolean", "9");
-    ArrayList<Question> questions = quizAPI.getQuestions();
 
     public final String trueFalse = "True";
 
@@ -53,6 +50,22 @@ public class TruefalseView extends JPanel implements ActionListener, PropertyCha
         this.truefalseViewModel = truefalseViewModel;
         this.truefalseViewModel.addPropertyChangeListener(this);
         this.viewManagerModel = viewManagerModel;
+
+        TruefalseState tfstate = truefalseViewModel.getState();
+
+        int balls = tfstate.getQuestions();
+
+        System.out.println(balls);
+
+
+
+        QuizAPI quizAPI = new QuizAPI(balls, "easy", "boolean", "9");
+
+        ArrayList<Question> questions = quizAPI.getQuestions();
+
+        System.out.println("PEWPEWPEWPPWPEW123456789765432");
+
+
         // Top label
         JLabel title;
         title = new JLabel(questions.get(counter).getQuestion());

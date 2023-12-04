@@ -92,7 +92,7 @@ public class Main {
         views.add(collectQuestionsView, collectQuestionsView.viewName);
 
         // WILL NEED TO BE CHANGED INTO A FACTORY WHEN THE 1/2 OUTPUT VIEWS FROM THE BUTTONS ARE READY
-        SelectTypeView selectTypeView = new SelectTypeView(selectTypeViewModel, viewManagerModel);
+        SelectTypeView selectTypeView = new SelectTypeView(selectTypeViewModel, viewManagerModel, truefalseViewModel);
         views.add(selectTypeView, selectTypeView.viewName);
 
         // This can either kick you out to signup or loop you back to start, or move you to leaderboard(may be added later)
@@ -112,8 +112,8 @@ public class Main {
         views.add(loggedInView, loggedInView.viewName);
 
 
-        viewManagerModel.setActiveView(truefalseView.viewName);
-        viewManagerModel.setActiveView(endGameView.viewName);
+        viewManagerModel.setActiveView(collectQuestionsView.viewName);
+        // viewManagerModel.setActiveView(endGameView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.setPreferredSize(new Dimension(1024,800));
