@@ -32,7 +32,7 @@ public class TruefalseView extends JPanel implements ActionListener, PropertyCha
 
     public final String mulChoice = "False";
 
-    public final String viewName = "TRUEFALSE";
+    public static final String viewName = "TRUEFALSE";
 
     // Some J stuff down here:
 
@@ -47,6 +47,8 @@ public class TruefalseView extends JPanel implements ActionListener, PropertyCha
     private final ViewManagerModel viewManagerModel;
 
     private final JLabel selectTypeErrorField = new JLabel();
+
+
 
     public TruefalseView(TruefalseViewModel truefalseViewModel, ViewManagerModel viewManagerModel ) throws APIException, IOException, InterruptedException {
         //this.selectTypeController = selectTypeController;
@@ -148,7 +150,6 @@ public class TruefalseView extends JPanel implements ActionListener, PropertyCha
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
     }
 
 

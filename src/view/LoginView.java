@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
@@ -29,11 +30,12 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     final JButton logIn;
     final JButton cancel;
     private final LoginController loginController;
-
-    public LoginView(LoginViewModel loginViewModel, LoginController controller) {
+    private ViewManagerModel viewManagerModel;
+    public LoginView(LoginViewModel loginViewModel, LoginController controller, ViewManagerModel viewManagerModel) {
         this.setBackground(background);
         this.loginController = controller;
         this.loginViewModel = loginViewModel;
+        this.viewManagerModel = viewManagerModel;
         this.loginViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Welcome to Quizit!");
@@ -88,6 +90,15 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     }
                 }
         );
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(cancel)){
+                    viewManagerModel.setActiveView(SignupView.viewName);
+                    viewManagerModel.firePropertyChanged();
+                }
+            }
+        });
 
         cancel.addActionListener(this);
 
@@ -149,7 +160,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
      * React to a button click that results in evt.
      */
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
+
     }
 
     @Override

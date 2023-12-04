@@ -127,7 +127,6 @@ public class CollectQuestionsView extends JPanel implements ActionListener, Prop
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
     }
 }
 

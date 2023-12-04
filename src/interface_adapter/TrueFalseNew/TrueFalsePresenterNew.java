@@ -69,7 +69,6 @@ public class TrueFalsePresenterNew implements TrueFalseOutputBoundaryNew {
             if(caseI == 2){
                 int totScore = trueFalseStateNew.getTotScore();
                 trueFalseStateNew.setTotScore(totScore+1);
-                System.out.println("increase");
                 JOptionPane.showMessageDialog(null, "CORRECT", "RESULT", JOptionPane.INFORMATION_MESSAGE);
             }
             else{
