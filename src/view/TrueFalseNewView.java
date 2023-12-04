@@ -1,7 +1,10 @@
 package view;
 
+import entity.APIException;
 import interface_adapter.Collect_Questions.CollectQuestionsState;
 import interface_adapter.TrueFalseNew.TrueFalseControllerNew;
+import interface_adapter.TrueFalseNew.TrueFalseStateNew;
+import interface_adapter.TrueFalseNew.TrueFalseViewModelNew;
 import interface_adapter.truefalse.TruefalseState;
 
 import javax.swing.*;
@@ -10,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
 public class TrueFalseNewView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -42,7 +46,11 @@ public class TrueFalseNewView extends JPanel implements ActionListener, Property
 
 
         // THIS LABEL WILL DISPLAY THE QUESTION
-        JLabel question = new JLabel("True or False questions");
+        TrueFalseStateNew trueFalseStateNew = trueFalseViewModelNew.getState();
+        String qAsked = trueFalseStateNew.getQuestionAsked();
+        JLabel question = new JLabel(qAsked);
+
+
         question.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel buttons = new JPanel();
@@ -62,10 +70,22 @@ public class TrueFalseNewView extends JPanel implements ActionListener, Property
 
                             String tAns = "true";
 
+                            TrueFalseStateNew trueFalseStateNew = trueFalseViewModelNew.getState();
+
+                            Boolean isFirstDone = trueFalseStateNew.isFirstDone(); // Tell us if to initialize or not
+                            String Qleft = trueFalseStateNew.getTotalQ(); // So we will grab one question at a time this is 0
+
+                            String typeQuestion = trueFalseStateNew.getTypeQuestion();
                             // This will invoke the controller
-                            trueFalseControllerNew.execute(
-                                    "true"
-                            );
+                            try {
+                                trueFalseControllerNew.execute("true", isFirstDone, Qleft, typeQuestion);
+                            } catch (APIException e) {
+                                throw new RuntimeException(e);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     }
                 }
@@ -79,10 +99,22 @@ public class TrueFalseNewView extends JPanel implements ActionListener, Property
 
                             String fAns = "false";
 
+                            TrueFalseStateNew trueFalseStateNew = trueFalseViewModelNew.getState();
+
+                            Boolean isFirstDone = trueFalseStateNew.isFirstDone(); // Tell us if to initialize or not
+                            String Qleft = trueFalseStateNew.getTotalQ(); // So we will grab one question at a time this is 0
+
+                            String typeQuestion = trueFalseStateNew.getTypeQuestion();
                             // This will invoke the controller
-                            trueFalseControllerNew.execute(
-                                    "false"
-                            );
+                            try {
+                                trueFalseControllerNew.execute("false", isFirstDone, Qleft, typeQuestion);
+                            } catch (APIException e) {
+                                throw new RuntimeException(e);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     }
                 }
@@ -111,8 +143,8 @@ public class TrueFalseNewView extends JPanel implements ActionListener, Property
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
-        TruefalseState state = (TruefalseState) evt.getNewValue();
-        trueErrorField.setText(state.getTrueErrorValue);
+        TrueFalseStateNew state = (TrueFalseStateNew) evt.getNewValue();
+        trueErrorField.setText(state.getTrueErrorFeild());
 
     }
 }
