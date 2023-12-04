@@ -33,7 +33,7 @@ public class CollectQuestionsPresenter implements CollectQuestionsOutputBoundary
         String tot = totalQ.getTotalQ();
         String output = "You selected " + tot + " questions";
 
-        JOptionPane.showMessageDialog(null, output, "Total", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(null, output, "Total", JOptionPane.INFORMATION_MESSAGE);
 
         //Something like this will let you move data onto the next use case no problem
         SelectTypeState selectTypeState = selectTypeViewModel.getState();
@@ -56,7 +56,7 @@ public class CollectQuestionsPresenter implements CollectQuestionsOutputBoundary
         // You failed, so try again
 
         //System.out.println(error);
-        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
+        //JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
         // ADD POP UP WITH THIS INFO
 
         CollectQuestionsState collectQuestionsState = collectQuestionsViewModel.getState();
